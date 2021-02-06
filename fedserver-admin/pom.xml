@@ -68,16 +68,16 @@
         </dependency>
 
         <!-- 定时任务-->
-        <dependency>
-            <groupId>com.fedserver</groupId>
-            <artifactId>fedserver-quartz</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fedserver</groupId>-->
+<!--            <artifactId>fedserver-quartz</artifactId>-->
+<!--        </dependency>-->
 
         <!-- 代码生成-->
-        <dependency>
-            <groupId>com.fedserver</groupId>
-            <artifactId>fedserver-generator</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fedserver</groupId>-->
+<!--            <artifactId>fedserver-generator</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>commons-logging</groupId>
@@ -88,7 +88,7 @@
         <!--test模块-->
         <dependency>
             <groupId>com.fedserver</groupId>
-            <artifactId>fedserver-test</artifactId>
+            <artifactId>fedserver-app</artifactId>
             <scope>test</scope>
         </dependency>
 
