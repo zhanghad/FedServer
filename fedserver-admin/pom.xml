@@ -86,11 +86,11 @@
         </dependency>
 
         <!--test模块-->
-        <dependency>
-            <groupId>com.fedserver</groupId>
-            <artifactId>fedserver-app</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fedserver</groupId>-->
+<!--            <artifactId>fedserver-app</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
 
     </dependencies>
 
