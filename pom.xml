@@ -216,10 +216,10 @@
             </dependency>
 
 
-            <!--app模块-->
+            <!-- android后端模块 -->
             <dependency>
                 <groupId>com.fedserver</groupId>
-                <artifactId>fedserver-app</artifactId>
+                <artifactId>fedserver-android</artifactId>
                 <version>${fedserver.version}</version>
             </dependency>
 
@@ -233,7 +233,7 @@
 <!--        <module>fedserver-quartz</module>-->
 <!--        <module>fedserver-generator</module>-->
         <module>fedserver-common</module>
-        <module>fedserver-app</module>
+        <module>fedserver-android</module>
     </modules>
     <packaging>pom</packaging>
 
