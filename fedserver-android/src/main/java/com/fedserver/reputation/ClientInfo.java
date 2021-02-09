@@ -21,13 +21,11 @@ public class ClientInfo {
     //...其他设备信息
 
     public Reputation clientReputation=new Reputation();//用户声誉
-
-
+    
     //设备硬件评价
     public double getDeviceScore(){
         return 0.8*cpuScore()+0.15*ramScore()+0.05*storageScore();
     }
-
 
     //用户总体评价
     public double getClientSocre(){
