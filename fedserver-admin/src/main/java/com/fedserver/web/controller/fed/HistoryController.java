@@ -3,6 +3,7 @@ package com.fedserver.web.controller.fed;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fedserver.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +32,25 @@ import com.fedserver.system.service.ISysRoleService;
 import com.fedserver.system.service.ISysUserService;
 
 /**
- * 联邦任务配置
+ * 联邦任务历史记录
  *
  * @author fedserver
  */
 @Controller
-@RequestMapping("/fed/taskConfig")
-@Api(tags = "联邦任务配置")
-public class TaskConfigController extends BaseController {
+@RequestMapping("/fed/history")
+@Api(tags = "联邦任务历史记录")
+public class HistoryController extends BaseController
+{
 
-    private String prefix = "fed/taskConfig";
+    private String prefix = "fed/history";
+
     @GetMapping()
     //@RequiresPermissions("system:config:view")
     public String fedHistory(){
-        return prefix+"/taskConfig";
+        return prefix+"/history";
     }
+
+
+
 
 }

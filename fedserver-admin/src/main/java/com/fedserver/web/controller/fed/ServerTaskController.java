@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author fedserver
  */
 @Controller
-@RequestMapping("/fed/taskRunning")
+@RequestMapping("/fed/task")
 @Api(tags = "联邦任务运行管理")
-public class taskRunningController extends BaseController {
+public class ServerTaskController extends BaseController {
 
-    private String prefix = "fed/taskRunning";
+    private String prefix = "fed/task";
     @GetMapping()
     //@RequiresPermissions("system:config:view")
     public String fedHistory(){
-        return prefix+"/taskRunning";
+        return prefix+"/task";
     }
+
+
 
 }

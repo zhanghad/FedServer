@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('用户列表')" />
+    <th:block th:include="include :: header('任务配置列表')" />
     <th:block th:include="include :: layout-latest-css" />
     <th:block th:include="include :: ztree-css" />
 </head>
@@ -13,18 +13,16 @@
         <div class="row">
             <div class="col-sm-12 search-collapse">
                 <form id="user-form">
-                    <input type="hidden" id="deptId" name="deptId">
-                    <input type="hidden" id="parentId" name="parentId">
                     <div class="select-list">
                         <ul>
                             <li>
-                                任务配置名称：<input type="text" name="loginName"/>
+                                任务配置名称：<input type="text" name="configName"/>
                             </li>
                             <li>
-                                任务配置创建者：<input type="text" name="phonenumber"/>
+                                任务配置创建者：<input type="text" name="owner"/>
                             </li>
                             <li>
-                                任务配置状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
+                                任务配置状态：<select name="status" th:with="type=${@dict.getType('fed_config_status')}">
                                 <option value="">所有</option>
                                 <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                             </select>
@@ -45,19 +43,19 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:user:add">
+                <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="fed:config:add">
                     <i class="fa fa-plus"></i> 新增
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:user:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="fed:config:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:user:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="fed:config:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
+                <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="fed:config:import">
                     <i class="fa fa-upload"></i> 导入
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="fed:config:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -73,10 +71,10 @@
 <th:block th:include="include :: layout-latest-js" />
 <th:block th:include="include :: ztree-js" />
 <script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('system:user:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
-		var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
-		var prefix = ctx + "system/user";
+		var editFlag = [[${@permission.hasPermi('fed:config:edit')}]];
+		var removeFlag = [[${@permission.hasPermi('fed:config:remove')}]];
+		var resetPwdFlag = [[${@permission.hasPermi('fed:config:resetPwd')}]];
+		var prefix = ctx + "fed/user";
 
 		$(function() {
 		    var panehHidden = false;
@@ -93,7 +91,7 @@
 	    		$('#scroll-up').toTop(opt);
 	    	}
 		    queryUserList();
-		    queryDeptTree();
+		    // queryDeptTree();
 		});
 
 		function queryUserList() {
@@ -116,8 +114,8 @@
 		            title: '任务编号'
 		        },
 		        {
-		            field: 'loginName',
-		            title: '任务名称',
+		            field: 'configName',
+		            title: '配置名称',
 		            sortable: true
 		        },
 		        {
@@ -135,7 +133,7 @@
 		        },
 		        {
 		            field: 'phonenumber',
-		            title: '悬赏积分'
+		            title: '手机'
 		        },
 		        {
 		        	visible: editFlag == 'hidden' ? false : true,
@@ -159,7 +157,7 @@
 		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.userId + '\')"><i class="fa fa-remove"></i>删除</a> ');
 		                var more = [];
 		                more.push("<a class='btn btn-default btn-xs " + resetPwdFlag + "' href='javascript:void(0)' onclick='resetPwd(" + row.userId + ")'><i class='fa fa-key'></i>重置任务</a> ");
-<!--		                more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authRole(" + row.userId + ")'><i class='fa fa-check-square-o'></i>分配参与者</a>");-->
+		                more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authRole(" + row.userId + ")'><i class='fa fa-check-square-o'></i>分配参与者</a>");
 		                actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
 		                return actions.join('');
 		            }
@@ -168,22 +166,6 @@
 		    $.table.init(options);
 		}
 
-		function queryDeptTree()
-		{
-			var url = ctx + "system/dept/treeData";
-			var options = {
-		        url: url,
-		        expandLevel: 2,
-		        onClick : zOnClick
-		    };
-			$.tree.init(options);
-
-			function zOnClick(event, treeId, treeNode) {
-				$("#deptId").val(treeNode.id);
-				$("#parentId").val(treeNode.pId);
-				$.table.search();
-			}
-		}
 
 		$('#btnExpand').click(function() {
 			$._tree.expandAll(true);
@@ -198,20 +180,22 @@
 		});
 
 		$('#btnRefresh').click(function() {
-			queryDeptTree();
+			// queryDeptTree();
 		});
 
 		/* 用户管理-部门 */
-		function dept() {
-			var url = ctx + "system/dept";
-			$.modal.openTab("部门管理", url);
-		}
+		// function dept() {
+		// 	var url = ctx + "system/dept";
+		// 	$.modal.openTab("部门管理", url);
+		// }
+
+
 
 		/* 用户管理-重置密码 */
-		function resetPwd(userId) {
-		    var url = prefix + '/resetPwd/' + userId;
-		    $.modal.open("重置密码", url, '800', '300');
-		}
+		// function resetPwd(userId) {
+		//     var url = prefix + '/resetPwd/' + userId;
+		//     $.modal.open("重置密码", url, '800', '300');
+		// }
 
 		/* 用户管理-分配角色 */
 		function authRole(userId) {
@@ -243,6 +227,7 @@
 		}
 	</script>
 </body>
+
 <!-- 导入区域 -->
 <script id="importTpl" type="text/template">
     <form enctype="multipart/form-data" class="mt20 mb10">
