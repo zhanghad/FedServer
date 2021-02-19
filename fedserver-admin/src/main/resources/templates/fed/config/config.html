@@ -16,10 +16,10 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                任务配置名称：<input type="text" name="configName"/>
+                                任务配置名称：<input type="text" name="loginName"/>
                             </li>
                             <li>
-                                任务配置创建者：<input type="text" name="owner"/>
+                                任务配置创建者：<input type="text" name="userName"/>
                             </li>
                             <li>
                                 任务配置状态：<select name="status" th:with="type=${@dict.getType('fed_config_status')}">
@@ -74,7 +74,7 @@
 		var editFlag = [[${@permission.hasPermi('fed:config:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('fed:config:remove')}]];
 		var resetPwdFlag = [[${@permission.hasPermi('fed:config:resetPwd')}]];
-		var prefix = ctx + "fed/user";
+		var prefix = ctx + "fed/config";
 
 		$(function() {
 		    var panehHidden = false;
@@ -114,7 +114,7 @@
 		            title: '任务编号'
 		        },
 		        {
-		            field: 'configName',
+		            field: 'loginName',
 		            title: '配置名称',
 		            sortable: true
 		        },

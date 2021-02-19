@@ -294,8 +294,7 @@ public class SysUser extends BaseEntity
         this.loginDate = loginDate;
     }
 
-    public SysDept getDept()
-    {
+    public SysDept getDept() {
         if (dept == null)
         {
             dept = new SysDept();
