@@ -1,137 +1,163 @@
 package com.fedserver.fedtask.domain;
 
-public class ClientDevice {
-    /** 设备标识*/
-    private long device_id;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.fedserver.common.annotation.Excel;
+import com.fedserver.common.core.domain.BaseEntity;
 
-    /** 设备（特指智能手机）型号*/
-    private String 	device_type;
+/**
+ * 参与者设备对象 client_device
+ * 
+ * @author zhanghad
+ * @date 2021-02-19
+ */
+public class ClientDevice extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
 
-    /** 处理器型号*/
+    /** 设备标识 */
+    private Long deviceId;
+
+    /** 用户 */
+    @Excel(name = "用户")
+    private Long clientId;
+
+    /** 设备（特指智能手机）型号 */
+    @Excel(name = "设备", readConverterExp = "特=指智能手机")
+    private String deviceType;
+
+    /** 处理器型号 */
+    @Excel(name = "处理器型号")
     private String proc;
 
-    /** 电池容量*/
-    private int battery_capacity;
+    /** 电池容量，单位为mAh */
+    @Excel(name = "电池容量，单位为mAh")
+    private Long batteryCapacity;
 
-    /** 内存容量*/
-    private int ram_capacity;
+    /** 内存容量，单位为GB */
+    @Excel(name = "内存容量，单位为GB")
+    private Long ramCapacity;
 
-    /** Android版本*/
-    private String android_version;
+    /** Android版本 */
+    @Excel(name = "Android版本")
+    private String androidVersion;
 
-    /** 操作系统版本*/
+    /** 操作系统版本 */
+    @Excel(name = "操作系统版本")
     private String os;
 
-    /** 机身存储容量*/
-    private int storage;
+    /** 机身存储容量，单位GB */
+    @Excel(name = "机身存储容量，单位GB")
+    private Long storage;
 
-    /** 是否连接电源，0表示没有，1表示已连接*/
-    private boolean powered;
+    /** 是否连接电源，0表示没有，1表示已连接 */
+    @Excel(name = "是否连接电源，0表示没有，1表示已连接")
+    private String powered;
 
-    /** 网络状态*/
-    private String 	network;
-
-    /** 用户*/
-    private long client_id;
-
-    public void setClient_id(long client_id) {
-        this.client_id = client_id;
+    public void setDeviceId(Long deviceId) 
+    {
+        this.deviceId = deviceId;
     }
 
-    public void setNetwork(String network) {
-        this.network = network;
+    public Long getDeviceId() 
+    {
+        return deviceId;
+    }
+    public void setClientId(Long clientId) 
+    {
+        this.clientId = clientId;
     }
 
-    public void setAndroid_version(String android_version) {
-        this.android_version = android_version;
+    public Long getClientId() 
+    {
+        return clientId;
+    }
+    public void setDeviceType(String deviceType) 
+    {
+        this.deviceType = deviceType;
     }
 
-    public void setBattery_capacity(int battery_capacity) {
-        this.battery_capacity = battery_capacity;
+    public String getDeviceType() 
+    {
+        return deviceType;
     }
-
-    public void setDevice_id(long device_id) {
-        this.device_id = device_id;
-    }
-
-    public void setDevice_type(String device_type) {
-        this.device_type = device_type;
-    }
-
-    public void setOs(String os) {
-        this.os = os;
-    }
-
-    public void setPowered(boolean powered) {
-        this.powered = powered;
-    }
-
-    public void setProc(String proc) {
+    public void setProc(String proc) 
+    {
         this.proc = proc;
     }
 
-    public void setRam_capacity(int ram_capacity) {
-        this.ram_capacity = ram_capacity;
+    public String getProc() 
+    {
+        return proc;
+    }
+    public void setBatteryCapacity(Long batteryCapacity) 
+    {
+        this.batteryCapacity = batteryCapacity;
     }
 
-    public void setStorage(int storage) {
+    public Long getBatteryCapacity() 
+    {
+        return batteryCapacity;
+    }
+    public void setRamCapacity(Long ramCapacity) 
+    {
+        this.ramCapacity = ramCapacity;
+    }
+
+    public Long getRamCapacity() 
+    {
+        return ramCapacity;
+    }
+    public void setAndroidVersion(String androidVersion) 
+    {
+        this.androidVersion = androidVersion;
+    }
+
+    public String getAndroidVersion() 
+    {
+        return androidVersion;
+    }
+    public void setOs(String os) 
+    {
+        this.os = os;
+    }
+
+    public String getOs() 
+    {
+        return os;
+    }
+    public void setStorage(Long storage) 
+    {
         this.storage = storage;
     }
 
-    public long getClient_id() {
-        return client_id;
-    }
-
-    public String getNetwork() {
-        return network;
-    }
-
-    public int getBattery_capacity() {
-        return battery_capacity;
-    }
-
-    public int getRam_capacity() {
-        return ram_capacity;
-    }
-
-    public int getStorage() {
+    public Long getStorage() 
+    {
         return storage;
     }
-
-    public long getDevice_id() {
-        return device_id;
+    public void setPowered(String powered) 
+    {
+        this.powered = powered;
     }
 
-    public String getAndroid_version() {
-        return android_version;
-    }
-
-    public String getDevice_type() {
-        return device_type;
-    }
-
-    public String getOs() {
-        return os;
-    }
-
-    public String getProc() {
-        return proc;
+    public String getPowered() 
+    {
+        return powered;
     }
 
     @Override
     public String toString() {
-        return "client_device{" +
-                "device_id=" + device_id +
-                ", device_type='" + device_type + '\'' +
-                ", proc='" + proc + '\'' +
-                ", battery_capacity=" + battery_capacity +
-                ", ram_capacity=" + ram_capacity +
-                ", android_version='" + android_version + '\'' +
-                ", os='" + os + '\'' +
-                ", storage=" + storage +
-                ", powered=" + powered +
-                ", network='" + network + '\'' +
-                ", client_id=" + client_id +
-                '}';
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("deviceId", getDeviceId())
+            .append("clientId", getClientId())
+            .append("deviceType", getDeviceType())
+            .append("proc", getProc())
+            .append("batteryCapacity", getBatteryCapacity())
+            .append("ramCapacity", getRamCapacity())
+            .append("androidVersion", getAndroidVersion())
+            .append("os", getOs())
+            .append("storage", getStorage())
+            .append("powered", getPowered())
+            .toString();
     }
 }
