@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fedserver.fedtask.mapper.ClientLogMapper">
+    
+    <resultMap type="ClientLog" id="ClientLogResult">
+        <result property="clId"    column="cl_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="tpId"    column="tp_id"    />
+        <result property="flag"    column="flag"    />
+        <result property="device"    column="device"    />
+        <result property="localIter"    column="local_iter"    />
+        <result property="modelEvaluate"    column="model_evaluate"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectClientLogVo">
+        select cl_id, client_id, tp_id, flag, device, local_iter, model_evaluate, start_time, end_time from client_log
+    </sql>
+
+    <select id="selectClientLogList" parameterType="ClientLog" resultMap="ClientLogResult">
+        <include refid="selectClientLogVo"/>
+        <where>  
+            <if test="flag != null  and flag != ''"> and flag = #{flag}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientLogById" parameterType="Long" resultMap="ClientLogResult">
+        <include refid="selectClientLogVo"/>
+        where cl_id = #{clId}
+    </select>
+        
+    <insert id="insertClientLog" parameterType="ClientLog" useGeneratedKeys="true" keyProperty="clId">
+        insert into client_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientId != null">client_id,</if>
+            <if test="tpId != null">tp_id,</if>
+            <if test="flag != null">flag,</if>
+            <if test="device != null and device != ''">device,</if>
+            <if test="localIter != null">local_iter,</if>
+            <if test="modelEvaluate != null">model_evaluate,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientId != null">#{clientId},</if>
+            <if test="tpId != null">#{tpId},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="device != null and device != ''">#{device},</if>
+            <if test="localIter != null">#{localIter},</if>
+            <if test="modelEvaluate != null">#{modelEvaluate},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientLog" parameterType="ClientLog">
+        update client_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="tpId != null">tp_id = #{tpId},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="device != null and device != ''">device = #{device},</if>
+            <if test="localIter != null">local_iter = #{localIter},</if>
+            <if test="modelEvaluate != null">model_evaluate = #{modelEvaluate},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+        </trim>
+        where cl_id = #{clId}
+    </update>
+
+    <delete id="deleteClientLogById" parameterType="Long">
+        delete from client_log where cl_id = #{clId}
+    </delete>
+
+    <delete id="deleteClientLogByIds" parameterType="String">
+        delete from client_log where cl_id in 
+        <foreach item="clId" collection="array" open="(" separator="," close=")">
+            #{clId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -23,21 +23,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
     </resultMap>
 
-    <resultMap id="ClientClientDeviceResult" type="Client" extends="ClientResult">
-        <collection property="clientDeviceList" notNullColumn="device_id" javaType="java.util.List" resultMap="ClientDeviceResult" />
+    <resultMap id="ClientClientLogResult" type="Client" extends="ClientResult">
+        <collection property="clientLogList" notNullColumn="cl_id" javaType="java.util.List" resultMap="ClientLogResult" />
     </resultMap>
 
-    <resultMap type="ClientDevice" id="ClientDeviceResult">
-        <result property="deviceId"    column="device_id"    />
+    <resultMap type="ClientLog" id="ClientLogResult">
+        <result property="clId"    column="cl_id"    />
         <result property="clientId"    column="client_id"    />
-        <result property="deviceType"    column="device_type"    />
-        <result property="proc"    column="proc"    />
-        <result property="batteryCapacity"    column="battery_capacity"    />
-        <result property="ramCapacity"    column="ram_capacity"    />
-        <result property="androidVersion"    column="android_version"    />
-        <result property="os"    column="os"    />
-        <result property="storage"    column="storage"    />
-        <result property="powered"    column="powered"    />
+        <result property="tpId"    column="tp_id"    />
+        <result property="flag"    column="flag"    />
+        <result property="device"    column="device"    />
+        <result property="localIter"    column="local_iter"    />
+        <result property="modelEvaluate"    column="model_evaluate"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
     </resultMap>
 
     <sql id="selectClientVo">
@@ -49,26 +48,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="clientName != null  and clientName != ''"> and client_name like concat('%', #{clientName}, '%')</if>
             <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
-            <if test="password != null  and password != ''"> and password = #{password}</if>
             <if test="email != null  and email != ''"> and email = #{email}</if>
             <if test="phonenumber != null  and phonenumber != ''"> and phonenumber = #{phonenumber}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
-            <if test="avator != null  and avator != ''"> and avator = #{avator}</if>
             <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
-            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
-            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
-            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
-            <if test="creatBy != null  and creatBy != ''"> and creat_by = #{creatBy}</if>
-            <if test="updateTime != null "> and update_time = #{updateTime}</if>
-            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
         </where>
     </select>
     
-    <select id="selectClientById" parameterType="Long" resultMap="ClientClientDeviceResult">
+    <select id="selectClientById" parameterType="Long" resultMap="ClientClientLogResult">
         select a.client_id, a.client_name, a.login_name, a.password, a.salt, a.email, a.phonenumber, a.status, a.avator, a.sex, a.del_flag, a.remark, a.creat_time, a.creat_by, a.update_time, a.update_by,
-            b.device_id, b.client_id, b.device_type, b.proc, b.battery_capacity, b.ram_capacity, b.android_version, b.os, b.storage, b.powered
+            b.cl_id, b.client_id, b.tp_id, b.flag, b.device, b.local_iter, b.model_evaluate, b.start_time, b.end_time
         from client a
-        left join client_device b on b.client_id = a.client_id
+        left join client_log b on b.client_id = a.client_id
         where a.client_id = #{clientId}
     </select>
         
@@ -143,21 +133,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
     
-    <delete id="deleteClientDeviceByClientIds" parameterType="String">
-        delete from client_device where client_id in 
+    <delete id="deleteClientLogByClientIds" parameterType="String">
+        delete from client_log where client_id in 
         <foreach item="clientId" collection="array" open="(" separator="," close=")">
             #{clientId}
         </foreach>
     </delete>
 
-    <delete id="deleteClientDeviceByClientId" parameterType="Long">
-        delete from client_device where client_id = #{clientId}
+    <delete id="deleteClientLogByClientId" parameterType="Long">
+        delete from client_log where client_id = #{clientId}
     </delete>
 
-    <insert id="batchClientDevice">
-        insert into client_device( device_id, client_id, device_type, proc, battery_capacity, ram_capacity, android_version, os, storage, powered) values
+    <insert id="batchClientLog">
+        insert into client_log( cl_id, client_id, tp_id, flag, device, local_iter, model_evaluate, start_time, end_time) values
 		<foreach item="item" index="index" collection="list" separator=",">
-            ( #{item.deviceId}, #{item.clientId}, #{item.deviceType}, #{item.proc}, #{item.batteryCapacity}, #{item.ramCapacity}, #{item.androidVersion}, #{item.os}, #{item.storage}, #{item.powered})
+            ( #{item.clId}, #{item.clientId}, #{item.tpId}, #{item.flag}, #{item.device}, #{item.localIter}, #{item.modelEvaluate}, #{item.startTime}, #{item.endTime})
         </foreach>
     </insert>
 

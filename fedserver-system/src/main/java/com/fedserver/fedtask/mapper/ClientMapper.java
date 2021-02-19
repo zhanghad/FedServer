@@ -2,7 +2,7 @@ package com.fedserver.fedtask.mapper;
 
 import java.util.List;
 import com.fedserver.fedtask.domain.Client;
-import com.fedserver.fedtask.domain.ClientDevice;
+import com.fedserver.fedtask.domain.ClientLog;
 
 /**
  * 参与者信息Mapper接口
@@ -61,27 +61,27 @@ public interface ClientMapper
     public int deleteClientByIds(String[] clientIds);
 
     /**
-     * 批量删除参与者设备
+     * 批量删除用户参与任务记录
      * 
      * @param customerIds 需要删除的数据ID
      * @return 结果
      */
-    public int deleteClientDeviceByClientIds(String[] clientIds);
+    public int deleteClientLogByClientIds(String[] clientIds);
     
     /**
-     * 批量新增参与者设备
+     * 批量新增用户参与任务记录
      * 
-     * @param clientDeviceList 参与者设备列表
+     * @param clientLogList 用户参与任务记录列表
      * @return 结果
      */
-    public int batchClientDevice(List<ClientDevice> clientDeviceList);
+    public int batchClientLog(List<ClientLog> clientLogList);
     
 
     /**
-     * 通过参与者信息ID删除参与者设备信息
+     * 通过参与者信息ID删除用户参与任务记录信息
      * 
      * @param roleId 角色ID
      * @return 结果
      */
-    public int deleteClientDeviceByClientId(Long clientId);
+    public int deleteClientLogByClientId(Long clientId);
 }

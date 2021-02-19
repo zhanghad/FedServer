@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fedserver.fedtask.mapper.ClientDeviceMapper">
+    
+    <resultMap type="ClientDevice" id="ClientDeviceResult">
+        <result property="deviceId"    column="device_id"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="deviceType"    column="device_type"    />
+        <result property="proc"    column="proc"    />
+        <result property="batteryCapacity"    column="battery_capacity"    />
+        <result property="ramCapacity"    column="ram_capacity"    />
+        <result property="androidVersion"    column="android_version"    />
+        <result property="os"    column="os"    />
+        <result property="storage"    column="storage"    />
+        <result property="powered"    column="powered"    />
+    </resultMap>
+
+    <sql id="selectClientDeviceVo">
+        select device_id, client_id, device_type, proc, battery_capacity, ram_capacity, android_version, os, storage, powered from client_device
+    </sql>
+
+    <select id="selectClientDeviceList" parameterType="ClientDevice" resultMap="ClientDeviceResult">
+        <include refid="selectClientDeviceVo"/>
+        <where>  
+            <if test="clientId != null "> and client_id = #{clientId}</if>
+            <if test="deviceType != null  and deviceType != ''"> and device_type = #{deviceType}</if>
+            <if test="proc != null  and proc != ''"> and proc = #{proc}</if>
+            <if test="batteryCapacity != null "> and battery_capacity = #{batteryCapacity}</if>
+            <if test="ramCapacity != null "> and ram_capacity = #{ramCapacity}</if>
+            <if test="androidVersion != null  and androidVersion != ''"> and android_version = #{androidVersion}</if>
+            <if test="os != null  and os != ''"> and os = #{os}</if>
+            <if test="storage != null "> and storage = #{storage}</if>
+            <if test="powered != null  and powered != ''"> and powered = #{powered}</if>
+        </where>
+    </select>
+    
+    <select id="selectClientDeviceById" parameterType="Long" resultMap="ClientDeviceResult">
+        <include refid="selectClientDeviceVo"/>
+        where device_id = #{deviceId}
+    </select>
+        
+    <insert id="insertClientDevice" parameterType="ClientDevice" useGeneratedKeys="true" keyProperty="deviceId">
+        insert into client_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientId != null">client_id,</if>
+            <if test="deviceType != null">device_type,</if>
+            <if test="proc != null">proc,</if>
+            <if test="batteryCapacity != null">battery_capacity,</if>
+            <if test="ramCapacity != null">ram_capacity,</if>
+            <if test="androidVersion != null">android_version,</if>
+            <if test="os != null">os,</if>
+            <if test="storage != null">storage,</if>
+            <if test="powered != null">powered,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientId != null">#{clientId},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="proc != null">#{proc},</if>
+            <if test="batteryCapacity != null">#{batteryCapacity},</if>
+            <if test="ramCapacity != null">#{ramCapacity},</if>
+            <if test="androidVersion != null">#{androidVersion},</if>
+            <if test="os != null">#{os},</if>
+            <if test="storage != null">#{storage},</if>
+            <if test="powered != null">#{powered},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClientDevice" parameterType="ClientDevice">
+        update client_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="proc != null">proc = #{proc},</if>
+            <if test="batteryCapacity != null">battery_capacity = #{batteryCapacity},</if>
+            <if test="ramCapacity != null">ram_capacity = #{ramCapacity},</if>
+            <if test="androidVersion != null">android_version = #{androidVersion},</if>
+            <if test="os != null">os = #{os},</if>
+            <if test="storage != null">storage = #{storage},</if>
+            <if test="powered != null">powered = #{powered},</if>
+        </trim>
+        where device_id = #{deviceId}
+    </update>
+
+    <delete id="deleteClientDeviceById" parameterType="Long">
+        delete from client_device where device_id = #{deviceId}
+    </delete>
+
+    <delete id="deleteClientDeviceByIds" parameterType="String">
+        delete from client_device where device_id in 
+        <foreach item="deviceId" collection="array" open="(" separator="," close=")">
+            #{deviceId}
+        </foreach>
+    </delete>
+
+</mapper>

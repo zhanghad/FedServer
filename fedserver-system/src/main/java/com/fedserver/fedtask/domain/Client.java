@@ -3,6 +3,7 @@ package com.fedserver.fedtask.domain;
 import java.util.List;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fedserver.fedtask.domain.ClientLog;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fedserver.common.annotation.Excel;
@@ -25,8 +26,8 @@ public class Client extends BaseEntity
     @Excel(name = "用户名")
     private String clientName;
 
-    /** 用户名 */
-    @Excel(name = "用户名")
+    /** 登录名 */
+    @Excel(name = "登录名")
     private String loginName;
 
     /** 密码 */
@@ -43,8 +44,8 @@ public class Client extends BaseEntity
     @Excel(name = "手机号")
     private String phonenumber;
 
-    /** 用户状态，0表示正常，1表示不可用 */
-    @Excel(name = "用户状态，0表示正常，1表示不可用")
+    /** 用户状态 */
+    @Excel(name = "用户状态")
     private String status;
 
     /** 头像路径 */
@@ -54,7 +55,7 @@ public class Client extends BaseEntity
     @Excel(name = "性别")
     private String sex;
 
-    /** 删除标志，0表示正常，1表示已删除 */
+    /** 删除标志 */
     private String delFlag;
 
     /** 创建时间 */
@@ -63,11 +64,10 @@ public class Client extends BaseEntity
     private Date creatTime;
 
     /** 创建者 */
-    @Excel(name = "创建者")
     private String creatBy;
 
-    /** 参与者设备信息 */
-    private List<ClientDevice> clientDeviceList;
+    /** 用户参与任务记录信息 */
+    private List<ClientLog> clientLogList;
 
     public void setClientId(Long clientId) 
     {
@@ -187,14 +187,14 @@ public class Client extends BaseEntity
         return creatBy;
     }
 
-    public List<ClientDevice> getClientDeviceList()
+    public List<ClientLog> getClientLogList()
     {
-        return clientDeviceList;
+        return clientLogList;
     }
 
-    public void setClientDeviceList(List<ClientDevice> clientDeviceList)
+    public void setClientLogList(List<ClientLog> clientLogList)
     {
-        this.clientDeviceList = clientDeviceList;
+        this.clientLogList = clientLogList;
     }
 
     @Override
@@ -216,7 +216,7 @@ public class Client extends BaseEntity
             .append("creatBy", getCreatBy())
             .append("updateTime", getUpdateTime())
             .append("updateBy", getUpdateBy())
-            .append("clientDeviceList", getClientDeviceList())
+            .append("clientLogList", getClientLogList())
             .toString();
     }
 }

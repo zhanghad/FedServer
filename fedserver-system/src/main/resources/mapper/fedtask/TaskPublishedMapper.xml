@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fedserver.fedtask.mapper.TaskPublishedMapper">
+    
+    <resultMap type="TaskPublished" id="TaskPublishedResult">
+        <result property="tpId"    column="tp_id"    />
+        <result property="taskConfig"    column="task_config"    />
+        <result property="status"    column="status"    />
+        <result property="curEpoch"    column="cur_epoch"    />
+        <result property="curClients"    column="cur_clients"    />
+        <result property="tpName"    column="tp_name"    />
+        <result property="startTime"    column="start_time"    />
+    </resultMap>
+
+    <resultMap id="TaskPublishedTaskLogResult" type="TaskPublished" extends="TaskPublishedResult">
+        <collection property="taskLogList" notNullColumn="tl_id" javaType="java.util.List" resultMap="TaskLogResult" />
+    </resultMap>
+
+    <resultMap type="TaskLog" id="TaskLogResult">
+        <result property="tlId"    column="tl_id"    />
+        <result property="tpId"    column="tp_id"    />
+        <result property="trainEpoch"    column="train_epoch"    />
+        <result property="modelEvaluate"    column="model_evaluate"    />
+        <result property="clientStart"    column="client_start"    />
+        <result property="clientSuccess"    column="client_success"    />
+        <result property="flag"    column="flag"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectTaskPublishedVo">
+        select tp_id, task_config, status, cur_epoch, cur_clients, tp_name, start_time from task_published
+    </sql>
+
+    <select id="selectTaskPublishedList" parameterType="TaskPublished" resultMap="TaskPublishedResult">
+        <include refid="selectTaskPublishedVo"/>
+        <where>  
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="tpName != null  and tpName != ''"> and tp_name like concat('%', #{tpName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTaskPublishedById" parameterType="Long" resultMap="TaskPublishedTaskLogResult">
+        select a.tp_id, a.task_config, a.status, a.cur_epoch, a.cur_clients, a.tp_name, a.start_time,
+            b.tl_id, b.tp_id, b.train_epoch, b.model_evaluate, b.client_start, b.client_success, b.flag, b.start_time, b.end_time
+        from task_published a
+        left join task_log b on b.tp_id = a.tp_id
+        where a.tp_id = #{tpId}
+    </select>
+        
+    <insert id="insertTaskPublished" parameterType="TaskPublished" useGeneratedKeys="true" keyProperty="tpId">
+        insert into task_published
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskConfig != null">task_config,</if>
+            <if test="status != null">status,</if>
+            <if test="curEpoch != null">cur_epoch,</if>
+            <if test="curClients != null">cur_clients,</if>
+            <if test="tpName != null and tpName != ''">tp_name,</if>
+            <if test="startTime != null">start_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskConfig != null">#{taskConfig},</if>
+            <if test="status != null">#{status},</if>
+            <if test="curEpoch != null">#{curEpoch},</if>
+            <if test="curClients != null">#{curClients},</if>
+            <if test="tpName != null and tpName != ''">#{tpName},</if>
+            <if test="startTime != null">#{startTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskPublished" parameterType="TaskPublished">
+        update task_published
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskConfig != null">task_config = #{taskConfig},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="curEpoch != null">cur_epoch = #{curEpoch},</if>
+            <if test="curClients != null">cur_clients = #{curClients},</if>
+            <if test="tpName != null and tpName != ''">tp_name = #{tpName},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+        </trim>
+        where tp_id = #{tpId}
+    </update>
+
+    <delete id="deleteTaskPublishedById" parameterType="Long">
+        delete from task_published where tp_id = #{tpId}
+    </delete>
+
+    <delete id="deleteTaskPublishedByIds" parameterType="String">
+        delete from task_published where tp_id in 
+        <foreach item="tpId" collection="array" open="(" separator="," close=")">
+            #{tpId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteTaskLogByTpIds" parameterType="String">
+        delete from task_log where tp_id in 
+        <foreach item="tpId" collection="array" open="(" separator="," close=")">
+            #{tpId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteTaskLogByTpId" parameterType="Long">
+        delete from task_log where tp_id = #{tpId}
+    </delete>
+
+    <insert id="batchTaskLog">
+        insert into task_log( tl_id, tp_id, train_epoch, model_evaluate, client_start, client_success, flag, start_time, end_time) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.tlId}, #{item.tpId}, #{item.trainEpoch}, #{item.modelEvaluate}, #{item.clientStart}, #{item.clientSuccess}, #{item.flag}, #{item.startTime}, #{item.endTime})
+        </foreach>
+    </insert>
+
+</mapper>

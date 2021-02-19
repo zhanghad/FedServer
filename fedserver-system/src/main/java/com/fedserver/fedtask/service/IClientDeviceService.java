@@ -1,0 +1,61 @@
+package com.fedserver.fedtask.service;
+
+import java.util.List;
+import com.fedserver.fedtask.domain.ClientDevice;
+
+/**
+ * 参与者设备Service接口
+ * 
+ * @author zhanghad
+ * @date 2021-02-19
+ */
+public interface IClientDeviceService 
+{
+    /**
+     * 查询参与者设备
+     * 
+     * @param deviceId 参与者设备ID
+     * @return 参与者设备
+     */
+    public ClientDevice selectClientDeviceById(Long deviceId);
+
+    /**
+     * 查询参与者设备列表
+     * 
+     * @param clientDevice 参与者设备
+     * @return 参与者设备集合
+     */
+    public List<ClientDevice> selectClientDeviceList(ClientDevice clientDevice);
+
+    /**
+     * 新增参与者设备
+     * 
+     * @param clientDevice 参与者设备
+     * @return 结果
+     */
+    public int insertClientDevice(ClientDevice clientDevice);
+
+    /**
+     * 修改参与者设备
+     * 
+     * @param clientDevice 参与者设备
+     * @return 结果
+     */
+    public int updateClientDevice(ClientDevice clientDevice);
+
+    /**
+     * 批量删除参与者设备
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteClientDeviceByIds(String ids);
+
+    /**
+     * 删除参与者设备信息
+     * 
+     * @param deviceId 参与者设备ID
+     * @return 结果
+     */
+    public int deleteClientDeviceById(Long deviceId);
+}

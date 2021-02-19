@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fedserver.fedtask.mapper.TaskClientMapper">
+    
+    <resultMap type="TaskClient" id="TaskClientResult">
+        <result property="tpId"    column="tp_id"    />
+        <result property="clientId"    column="client_id"    />
+    </resultMap>
+
+    <sql id="selectTaskClientVo">
+        select tp_id, client_id from task_client
+    </sql>
+
+    <select id="selectTaskClientList" parameterType="TaskClient" resultMap="TaskClientResult">
+        <include refid="selectTaskClientVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectTaskClientById" parameterType="Long" resultMap="TaskClientResult">
+        <include refid="selectTaskClientVo"/>
+        where tp_id = #{tpId}
+    </select>
+        
+    <insert id="insertTaskClient" parameterType="TaskClient">
+        insert into task_client
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tpId != null">tp_id,</if>
+            <if test="clientId != null">client_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tpId != null">#{tpId},</if>
+            <if test="clientId != null">#{clientId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskClient" parameterType="TaskClient">
+        update task_client
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientId != null">client_id = #{clientId},</if>
+        </trim>
+        where tp_id = #{tpId}
+    </update>
+
+    <delete id="deleteTaskClientById" parameterType="Long">
+        delete from task_client where tp_id = #{tpId}
+    </delete>
+
+    <delete id="deleteTaskClientByIds" parameterType="String">
+        delete from task_client where tp_id in 
+        <foreach item="tpId" collection="array" open="(" separator="," close=")">
+            #{tpId}
+        </foreach>
+    </delete>
+
+</mapper>

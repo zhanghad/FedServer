@@ -2,13 +2,13 @@ package com.fedserver.fedtask.service.impl;
 
 import java.util.List;
 import com.fedserver.common.utils.DateUtils;
-import com.fedserver.fedtask.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import com.fedserver.common.utils.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
-import com.fedserver.fedtask.domain.ClientDevice;
+import com.fedserver.fedtask.domain.ClientLog;
+import com.fedserver.fedtask.mapper.ClientMapper;
 import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.service.IClientService;
 import com.fedserver.common.core.text.Convert;
@@ -60,7 +60,7 @@ public class ClientServiceImpl implements IClientService
     public int insertClient(Client client)
     {
         int rows = clientMapper.insertClient(client);
-        insertClientDevice(client);
+        insertClientLog(client);
         return rows;
     }
 
@@ -75,8 +75,8 @@ public class ClientServiceImpl implements IClientService
     public int updateClient(Client client)
     {
         client.setUpdateTime(DateUtils.getNowDate());
-        clientMapper.deleteClientDeviceByClientId(client.getClientId());
-        insertClientDevice(client);
+        clientMapper.deleteClientLogByClientId(client.getClientId());
+        insertClientLog(client);
         return clientMapper.updateClient(client);
     }
 
@@ -90,7 +90,7 @@ public class ClientServiceImpl implements IClientService
     @Override
     public int deleteClientByIds(String ids)
     {
-        clientMapper.deleteClientDeviceByClientIds(Convert.toStrArray(ids));
+        clientMapper.deleteClientLogByClientIds(Convert.toStrArray(ids));
         return clientMapper.deleteClientByIds(Convert.toStrArray(ids));
     }
 
@@ -103,30 +103,30 @@ public class ClientServiceImpl implements IClientService
     @Override
     public int deleteClientById(Long clientId)
     {
-        clientMapper.deleteClientDeviceByClientId(clientId);
+        clientMapper.deleteClientLogByClientId(clientId);
         return clientMapper.deleteClientById(clientId);
     }
 
     /**
-     * 新增参与者设备信息
+     * 新增用户参与任务记录信息
      * 
      * @param client 参与者信息对象
      */
-    public void insertClientDevice(Client client)
+    public void insertClientLog(Client client)
     {
-        List<ClientDevice> clientDeviceList = client.getClientDeviceList();
+        List<ClientLog> clientLogList = client.getClientLogList();
         Long clientId = client.getClientId();
-        if (StringUtils.isNotNull(clientDeviceList))
+        if (StringUtils.isNotNull(clientLogList))
         {
-            List<ClientDevice> list = new ArrayList<ClientDevice>();
-            for (ClientDevice clientDevice : clientDeviceList)
+            List<ClientLog> list = new ArrayList<ClientLog>();
+            for (ClientLog clientLog : clientLogList)
             {
-                clientDevice.setClientId(clientId);
-                list.add(clientDevice);
+                clientLog.setClientId(clientId);
+                list.add(clientLog);
             }
             if (list.size() > 0)
             {
-                clientMapper.batchClientDevice(list);
+                clientMapper.batchClientLog(list);
             }
         }
     }

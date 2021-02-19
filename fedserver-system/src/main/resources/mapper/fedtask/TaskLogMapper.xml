@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fedserver.fedtask.mapper.TaskLogMapper">
+    
+    <resultMap type="TaskLog" id="TaskLogResult">
+        <result property="tlId"    column="tl_id"    />
+        <result property="tpId"    column="tp_id"    />
+        <result property="trainEpoch"    column="train_epoch"    />
+        <result property="modelEvaluate"    column="model_evaluate"    />
+        <result property="clientStart"    column="client_start"    />
+        <result property="clientSuccess"    column="client_success"    />
+        <result property="flag"    column="flag"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectTaskLogVo">
+        select tl_id, tp_id, train_epoch, model_evaluate, client_start, client_success, flag, start_time, end_time from task_log
+    </sql>
+
+    <select id="selectTaskLogList" parameterType="TaskLog" resultMap="TaskLogResult">
+        <include refid="selectTaskLogVo"/>
+        <where>  
+            <if test="tpId != null "> and tp_id = #{tpId}</if>
+            <if test="trainEpoch != null  and trainEpoch != ''"> and train_epoch = #{trainEpoch}</if>
+            <if test="modelEvaluate != null  and modelEvaluate != ''"> and model_evaluate = #{modelEvaluate}</if>
+            <if test="clientStart != null  and clientStart != ''"> and client_start = #{clientStart}</if>
+            <if test="clientSuccess != null  and clientSuccess != ''"> and client_success = #{clientSuccess}</if>
+            <if test="flag != null  and flag != ''"> and flag = #{flag}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTaskLogById" parameterType="Long" resultMap="TaskLogResult">
+        <include refid="selectTaskLogVo"/>
+        where tl_id = #{tlId}
+    </select>
+        
+    <insert id="insertTaskLog" parameterType="TaskLog" useGeneratedKeys="true" keyProperty="tlId">
+        insert into task_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tpId != null">tp_id,</if>
+            <if test="trainEpoch != null and trainEpoch != ''">train_epoch,</if>
+            <if test="modelEvaluate != null">model_evaluate,</if>
+            <if test="clientStart != null">client_start,</if>
+            <if test="clientSuccess != null">client_success,</if>
+            <if test="flag != null">flag,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tpId != null">#{tpId},</if>
+            <if test="trainEpoch != null and trainEpoch != ''">#{trainEpoch},</if>
+            <if test="modelEvaluate != null">#{modelEvaluate},</if>
+            <if test="clientStart != null">#{clientStart},</if>
+            <if test="clientSuccess != null">#{clientSuccess},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTaskLog" parameterType="TaskLog">
+        update task_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tpId != null">tp_id = #{tpId},</if>
+            <if test="trainEpoch != null and trainEpoch != ''">train_epoch = #{trainEpoch},</if>
+            <if test="modelEvaluate != null">model_evaluate = #{modelEvaluate},</if>
+            <if test="clientStart != null">client_start = #{clientStart},</if>
+            <if test="clientSuccess != null">client_success = #{clientSuccess},</if>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+        </trim>
+        where tl_id = #{tlId}
+    </update>
+
+    <delete id="deleteTaskLogById" parameterType="Long">
+        delete from task_log where tl_id = #{tlId}
+    </delete>
+
+    <delete id="deleteTaskLogByIds" parameterType="String">
+        delete from task_log where tl_id in 
+        <foreach item="tlId" collection="array" open="(" separator="," close=")">
+            #{tlId}
+        </foreach>
+    </delete>
+
+</mapper>

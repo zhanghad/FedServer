@@ -15,7 +15,7 @@
                                 <input type="text" name="clientName"/>
                             </li>
                             <li>
-                                <label>用户名：</label>
+                                <label>登录名：</label>
                                 <input type="text" name="loginName"/>
                             </li>
                             <li>
@@ -27,34 +27,11 @@
                                 <input type="text" name="phonenumber"/>
                             </li>
                             <li>
-                                <label>用户状态</label>
-                                <select name="status">
-                                    <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>性别</label>
+                                <label>性别：</label>
                                 <select name="sex">
                                     <option value="">所有</option>
                                     <option value="-1">代码生成请选择字典属性</option>
                                 </select>
-                            </li>
-                            <li>
-                                <label>删除标志</label>
-                                <input type="text" name="delFlag"/>
-                            </li>
-                            <li>
-                                <label>创建时间</label>
-                                <input type="text" class="time-input" placeholder="请选择创建时间" name="creatTime"/>
-                            </li>
-                            <li>
-                                <label>更新时间</label>
-                                <input type="text" class="time-input" placeholder="请选择更新时间" name="updateTime"/>
-                            </li>
-                            <li>
-                                <label>：</label>
-                                <input type="text" name="updateBy"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -66,16 +43,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="fedserver-system:client:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="fed:client:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="fedserver-system:client:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="fed:client:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="fedserver-system:client:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="fed:client:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="fedserver-system:client:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="fed:client:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -86,9 +63,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('fedserver-system:client:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('fedserver-system:client:remove')}]];
-        var prefix = ctx + "fedserver-system/client";
+        var editFlag = [[${@permission.hasPermi('fed:client:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('fed:client:remove')}]];
+        var prefix = ctx + "fed/client";
 
         $(function() {
             var options = {
@@ -112,7 +89,7 @@
                 },
                 {
                     field: 'loginName',
-                    title: '用户名'
+                    title: '登录名'
                 },
                 {
                     field: 'email',
@@ -124,7 +101,7 @@
                 },
                 {
                     field: 'status',
-                    title: '用户状态，0表示正常，1表示不可用'
+                    title: '用户状态'
                 },
                 {
                     field: 'sex',
@@ -139,16 +116,8 @@
                     title: '创建时间'
                 },
                 {
-                    field: 'creatBy',
-                    title: '创建者'
-                },
-                {
                     field: 'updateTime',
                     title: '更新时间'
-                },
-                {
-                    field: 'updateBy',
-                    title: ''
                 },
                 {
                     title: '操作',

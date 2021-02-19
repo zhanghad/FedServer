@@ -1,6 +1,10 @@
 package com.fedserver.web.controller.fed;
 
 import java.util.List;
+
+import com.fedserver.common.utils.poi.ExcelUtil;
+import com.fedserver.fedtask.domain.Client;
+import com.fedserver.fedtask.service.IClientService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fedserver.common.annotation.Log;
 import com.fedserver.common.enums.BusinessType;
-import com.fedserver.fedtask.domain.Client;
-import com.fedserver.fedtask.service.IClientService;
 import com.fedserver.common.core.controller.BaseController;
 import com.fedserver.common.core.domain.AjaxResult;
-import com.fedserver.common.utils.poi.ExcelUtil;
 import com.fedserver.common.core.page.TableDataInfo;
 
 /**
@@ -26,7 +27,7 @@ import com.fedserver.common.core.page.TableDataInfo;
  * @date 2021-02-19
  */
 @Controller
-@RequestMapping("/fedserver-system/client")
+@RequestMapping("/fed/client")
 public class ClientController extends BaseController
 {
     private String prefix = "fed/client";
@@ -34,7 +35,7 @@ public class ClientController extends BaseController
     @Autowired
     private IClientService clientService;
 
-    @RequiresPermissions("fedserver-system:client:view")
+    @RequiresPermissions("fed:client:view")
     @GetMapping()
     public String client()
     {
@@ -44,7 +45,7 @@ public class ClientController extends BaseController
     /**
      * 查询参与者信息列表
      */
-    @RequiresPermissions("fedserver-system:client:list")
+    @RequiresPermissions("fed:client:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(Client client)
@@ -57,7 +58,7 @@ public class ClientController extends BaseController
     /**
      * 导出参与者信息列表
      */
-    @RequiresPermissions("fedserver-system:client:export")
+    @RequiresPermissions("fed:client:export")
     @Log(title = "参与者信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -80,7 +81,7 @@ public class ClientController extends BaseController
     /**
      * 新增保存参与者信息
      */
-    @RequiresPermissions("fedserver-system:client:add")
+    @RequiresPermissions("fed:client:add")
     @Log(title = "参与者信息", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -103,7 +104,7 @@ public class ClientController extends BaseController
     /**
      * 修改保存参与者信息
      */
-    @RequiresPermissions("fedserver-system:client:edit")
+    @RequiresPermissions("fed:client:edit")
     @Log(title = "参与者信息", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -115,7 +116,7 @@ public class ClientController extends BaseController
     /**
      * 删除参与者信息
      */
-    @RequiresPermissions("fedserver-system:client:remove")
+    @RequiresPermissions("fed:client:remove")
     @Log(title = "参与者信息", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
