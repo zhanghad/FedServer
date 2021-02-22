@@ -9,42 +9,82 @@
         <form class="form-horizontal m" id="form-client-add">
             <h4 class="form-header h4">参与者信息信息</h4>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">用户名</label>
+                <label class="col-sm-3 control-label is-required">用户名</label>
                 <div class="col-sm-8">
-                    <input name="clientName" class="form-control" type="text">
+                    <input name="clientName" class="form-control" type="text" required>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">登录名</label>
-                <div class="col-sm-8">
-                    <input name="loginName" class="form-control" type="text" required>
+
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label is-required">登录名</label>
+                    <div class="col-sm-8">
+                        <input name="loginName" class="form-control" type="text" required>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">    
+<!--            <div class="form-group">
                 <label class="col-sm-3 control-label is-required">密码</label>
                 <div class="col-sm-8">
                     <input name="password" class="form-control" type="text" required>
                 </div>
+            </div>-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">登录密码：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input id="password" name="password" placeholder="请输入登录密码" class="form-control" type="password" required>
+                            <span class="input-group-addon" title="登录密码,鼠标按下显示密码"
+                                  onmousedown="$('#password').attr('type','text')"
+                                  onmouseup="$('#password').attr('type','password')"><i class="fa fa-key"></i></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">    
+
+<!--            <div class="form-group">
                 <label class="col-sm-3 control-label">邮箱</label>
                 <div class="col-sm-8">
                     <input name="email" class="form-control" type="text">
                 </div>
+            </div>-->
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">手机号码：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input id="phonenumber" name="phonenumber" placeholder="请输入手机号码" class="form-control" type="text" maxlength="11" required>
+                            <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">    
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">邮箱：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input id="email" name="email" class="form-control email" type="text" maxlength="50" placeholder="请输入邮箱" required>
+                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<!--            <div class="form-group">
                 <label class="col-sm-3 control-label">手机号:</label>
                 <div class="col-sm-8">
                     <input name="phonenumber" class="form-control" type="text">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">    
                 <label class="col-sm-3 control-label">用户状态</label>
-                <div class="col-sm-8">
-                    <select name="status" class="form-control m-b">
-                        <option value="">所有</option>
-                    </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                <label class="toggle-switch switch-solid">
+                    <input type="checkbox" id="status" checked>
+                    <span></span>
+                </label>
                 </div>
             </div>
             <div class="form-group">    
@@ -59,10 +99,10 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">性别：</label>
                 <div class="col-sm-8">
-                    <select name="sex" class="form-control m-b">
-                        <option value="">所有</option>
+                    <select name="sex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">
+                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                     </select>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+<!--                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>-->
                 </div>
             </div>
             <div class="form-group">
@@ -92,6 +132,7 @@
         });
 
         function submitHandler() {
+
             if ($.validate.form()) {
                 $.operate.save(prefix + "/add", $('#form-client-add').serialize());
             }

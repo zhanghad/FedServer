@@ -1,6 +1,9 @@
 package com.fedserver.web.controller.fed;
 
 import java.util.List;
+
+import com.fedserver.common.utils.DateUtils;
+import com.fedserver.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +89,8 @@ public class TaskConfigController extends BaseController
     @ResponseBody
     public AjaxResult addSave(TaskConfig taskConfig)
     {
+        taskConfig.setCreateBy(ShiroUtils.getLoginName());
+        taskConfig.setCreateTime(DateUtils.getNowDate());
         return toAjax(taskConfigService.insertTaskConfig(taskConfig));
     }
 
@@ -109,6 +114,8 @@ public class TaskConfigController extends BaseController
     @ResponseBody
     public AjaxResult editSave(TaskConfig taskConfig)
     {
+        taskConfig.setUpdateTime(DateUtils.getNowDate());
+        taskConfig.setUpdateBy(ShiroUtils.getLoginName());
         return toAjax(taskConfigService.updateTaskConfig(taskConfig));
     }
 

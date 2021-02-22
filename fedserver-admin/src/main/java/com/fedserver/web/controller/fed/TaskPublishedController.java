@@ -1,6 +1,9 @@
 package com.fedserver.web.controller.fed;
 
 import java.util.List;
+
+import com.fedserver.common.utils.DateUtils;
+import com.fedserver.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +89,11 @@ public class TaskPublishedController extends BaseController
     @ResponseBody
     public AjaxResult addSave(TaskPublished taskPublished)
     {
+        taskPublished.setCurClients(0L);
+        taskPublished.setCurEpoch(0L);
+        taskPublished.setStartTime(DateUtils.getNowDate());
+//        taskPublished.setCreateBy(ShiroUtils.getLoginName());
+//        taskPublished.setCreateTime(DateUtils.getNowDate());
         return toAjax(taskPublishedService.insertTaskPublished(taskPublished));
     }
 

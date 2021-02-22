@@ -16,9 +16,9 @@
                             </li>
                             <li>
                                 <label>配置状态：</label>
-                                <select name="status">
+                                <select name="status" th:with="type=${@dict.getType('fed_config_status')}">
                                     <option value="">所有</option>
-                                    <option value="-1">代码生成请选择字典属性</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
                             <li>
@@ -55,6 +55,8 @@
         var removeFlag = [[${@permission.hasPermi('fed:config:remove')}]];
         var prefix = ctx + "fed/config";
 
+        var config_status = [[${@dict.getType('fed_config_status')}]];
+
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -77,51 +79,72 @@
                 },
                 {
                     field: 'tcDescription',
-                    title: '任务描述'
+                    title: '任务描述',
+                    visible: false
                 },
                 {
                     field: 'dataFormat',
-                    title: '数据格式要求'
+                    title: '数据格式要求',
+                    visible: false
                 },
                 {
                     field: 'deviceRequire',
-                    title: '硬件设备要求'
+                    title: '硬件设备要求',
+                    visible: false
                 },
                 {
                     field: 'modelPath',
-                    title: '预训练模型'
+                    title: '预训练模型',
+                    visible: false
                 },
                 {
                     field: 'testData',
-                    title: '服务端测试数据'
+                    title: '服务端测试数据',
+                    visible: false
                 },
                 {
                     field: 'minClient',
-                    title: '最少参与者数量'
+                    title: '最少参与者数量',
+                    visible: false
                 },
                 {
                     field: 'maxClient',
-                    title: '最多参与者数量'
+                    title: '最多参与者数量',
+                    visible: false
                 },
                 {
                     field: 'localIterations',
-                    title: '每次全局迭代的本地迭代次数'
+                    title: '每次全局迭代的本地迭代次数',
+                    visible: false
                 },
                 {
                     field: 'globalEpoch',
-                    title: '全局迭代次数'
+                    title: '全局迭代次数',
+                    visible: false
                 },
                 {
                     field: 'targetAccuracy',
-                    title: '目标精度'
+                    title: '目标精度',
+                    visible: false
                 },
                 {
                     field: 'finishFlag',
-                    title: '结束标志'
+                    title: '结束标志',
+                    visible: false
                 },
                 {
                     field: 'status',
-                    title: '配置状态'
+                    title: '配置状态',
+                    formatter: function(value, item, index) {
+                        return $.table.selectDictLabel(config_status, item.status);
+                    }
+/*                    visible: editFlag == 'hidden' ? false : true,
+                    field: 'status',
+                    title: '配置状态',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        return statusTools(row);
+                    }*/
                 },
                 {
                     field: 'createBy',
@@ -133,22 +156,25 @@
                 },
                 {
                     field: 'updateBy',
-                    title: '更新者'
+                    title: '更新者',
+                    visible: true
                 },
                 {
                     field: 'updateTime',
-                    title: ''
+                    title: '更新时间',
+                    visible: true
                 },
                 {
                     field: 'remark',
-                    title: '备注'
+                    title: '备注',
+                    visible: false
                 },
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.tcId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.tcId + '\')"><i class="fa fa-edit"></i>详细信息</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.tcId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }

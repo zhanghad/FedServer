@@ -2,9 +2,12 @@ package com.fedserver.web.controller.fed;
 
 import java.util.List;
 
+import com.fedserver.common.utils.DateUtils;
 import com.fedserver.common.utils.poi.ExcelUtil;
 import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.service.IClientService;
+import com.fedserver.framework.shiro.service.SysPasswordService;
+import com.fedserver.framework.util.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,9 @@ public class ClientController extends BaseController
 
     @Autowired
     private IClientService clientService;
+
+    @Autowired
+    private SysPasswordService passwordService;
 
     @RequiresPermissions("fed:client:view")
     @GetMapping()
@@ -87,6 +93,11 @@ public class ClientController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Client client)
     {
+
+        client.setCreateBy(ShiroUtils.getLoginName());
+        client.setCreatTime(DateUtils.getNowDate());
+        client.setSalt(ShiroUtils.randomSalt());
+        client.setPassword(passwordService.encryptPassword(client.getLoginName(), client.getPassword(), client.getSalt()));
         return toAjax(clientService.insertClient(client));
     }
 
@@ -110,6 +121,7 @@ public class ClientController extends BaseController
     @ResponseBody
     public AjaxResult editSave(Client client)
     {
+        client.setUpdateBy(ShiroUtils.getLoginName());
         return toAjax(clientService.updateClient(client));
     }
 
