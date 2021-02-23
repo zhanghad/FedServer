@@ -45,7 +45,7 @@ public class CommonController
      * @param delete 是否删除
      */
     @GetMapping("common/download")
-    @ApiOperation("通用下载请求")
+//    @ApiOperation("通用下载请求")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "fileName",value = "文件名称"),
             @ApiImplicitParam(name = "delete",value = "是否删除")

@@ -8,6 +8,7 @@ import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.service.IClientService;
 import com.fedserver.framework.shiro.service.SysPasswordService;
 import com.fedserver.framework.util.ShiroUtils;
+import io.swagger.annotations.Api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
