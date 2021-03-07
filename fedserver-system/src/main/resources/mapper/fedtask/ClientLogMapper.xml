@@ -33,6 +33,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectClientLogVo"/>
         where cl_id = #{clId}
     </select>
+
+    <select id="selectClientLogsByClientId" parameterType="Long" resultMap="ClientLogResult">
+        <include refid="selectClientLogVo"/>
+        where client_id = #{clientId}
+    </select>
+
         
     <insert id="insertClientLog" parameterType="ClientLog" useGeneratedKeys="true" keyProperty="clId">
         insert into client_log

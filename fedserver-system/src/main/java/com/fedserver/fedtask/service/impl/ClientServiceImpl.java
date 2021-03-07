@@ -1,6 +1,8 @@
 package com.fedserver.fedtask.service.impl;
 
 import java.util.List;
+
+import com.fedserver.common.constant.UserConstants;
 import com.fedserver.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,17 @@ public class ClientServiceImpl implements IClientService
     {
         return clientMapper.selectClientById(clientId);
     }
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param loginName 用户名
+     * @return 用户对象信息
+     */
+    public Client selectClientByLoginName(String loginName){
+        return clientMapper.selectClientByLoginName(loginName);
+    }
+
 
     /**
      * 查询参与者信息列表
@@ -129,5 +142,22 @@ public class ClientServiceImpl implements IClientService
                 clientMapper.batchClientLog(list);
             }
         }
+    }
+
+    /**
+     * 校验登录名称是否唯一
+     *
+     * @param loginName 用户名
+     * @return
+     */
+    @Override
+    public String checkLoginNameUnique(String loginName)
+    {
+        int count = clientMapper.checkLoginNameUnique(loginName);
+        if (count > 0)
+        {
+            return UserConstants.USER_NAME_NOT_UNIQUE;
+        }
+        return UserConstants.USER_NAME_UNIQUE;
     }
 }

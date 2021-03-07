@@ -35,7 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="powered != null  and powered != ''"> and powered = #{powered}</if>
         </where>
     </select>
-    
+
+    <select id="selectClientDevicesByClientId" parameterType="Long" resultMap="ClientDeviceResult">
+        <include refid="selectClientDeviceVo"/>
+        where client_id = #{clientId}
+    </select>
+
     <select id="selectClientDeviceById" parameterType="Long" resultMap="ClientDeviceResult">
         <include refid="selectClientDeviceVo"/>
         where device_id = #{deviceId}

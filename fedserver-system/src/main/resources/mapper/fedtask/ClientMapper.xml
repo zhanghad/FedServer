@@ -61,6 +61,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         left join client_log b on b.client_id = a.client_id
         where a.client_id = #{clientId}
     </select>
+
+
+    <select id="selectClientByLoginName" parameterType="String" resultMap="ClientResult">
+        <include refid="selectClientVo"/>
+        where client.login_name = #{loginName}
+    </select>
         
     <insert id="insertClient" parameterType="Client" useGeneratedKeys="true" keyProperty="clientId">
         insert into client
@@ -126,6 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from client where client_id = #{clientId}
     </delete>
 
+
     <delete id="deleteClientByIds" parameterType="String">
         delete from client where client_id in 
         <foreach item="clientId" collection="array" open="(" separator="," close=")">
@@ -150,5 +157,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ( #{item.clId}, #{item.clientId}, #{item.tpId}, #{item.flag}, #{item.device}, #{item.localIter}, #{item.modelEvaluate}, #{item.startTime}, #{item.endTime})
         </foreach>
     </insert>
+
+    <select id="checkLoginNameUnique" parameterType="String" resultType="int">
+		select count(1) from client where login_name=#{loginName} limit 1
+	</select>
 
 </mapper>

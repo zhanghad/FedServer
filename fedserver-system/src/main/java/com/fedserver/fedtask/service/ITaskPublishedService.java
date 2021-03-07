@@ -28,6 +28,13 @@ public interface ITaskPublishedService
     public List<TaskPublished> selectTaskPublishedList(TaskPublished taskPublished);
 
     /**
+     * 查询已发布任务列表
+     *
+     * @return 已发布任务集合
+     */
+    public List<TaskPublished> selectTaskPublishedALL();
+
+    /**
      * 新增已发布任务
      * 
      * @param taskPublished 已发布任务

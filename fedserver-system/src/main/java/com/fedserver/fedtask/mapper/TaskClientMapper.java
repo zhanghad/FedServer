@@ -28,6 +28,23 @@ public interface TaskClientMapper
     public List<TaskClient> selectTaskClientList(TaskClient taskClient);
 
     /**
+     * 查询任务参与者列表
+     *
+     * @param tpId 任务id
+     * @return 任务参与者集合
+     */
+    public List<TaskClient> selectTaskClientListByTpId(Long tpId);
+
+
+    /**
+     * 查询任务参与者列表
+     *
+     * @param clientId 参与者id
+     * @return 任务参与者集合
+     */
+    public List<TaskClient> selectTaskClientListByClientId(Long clientId);
+
+    /**
      * 新增任务参与者
      * 
      * @param taskClient 任务参与者
@@ -50,6 +67,15 @@ public interface TaskClientMapper
      * @return 结果
      */
     public int deleteTaskClientById(Long tpId);
+
+
+    /**
+     * 删除任务参与者
+     *
+     * @param taskClient 表项
+     * @return 结果
+     */
+    public int deleteTaskClient(TaskClient taskClient);
 
     /**
      * 批量删除任务参与者

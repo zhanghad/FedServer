@@ -41,6 +41,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tpName != null  and tpName != ''"> and tp_name like concat('%', #{tpName}, '%')</if>
         </where>
     </select>
+
+    <select id="selectTaskPublishedALL"  resultMap="TaskPublishedResult">
+        <include refid="selectTaskPublishedVo"/>
+    </select>
     
     <select id="selectTaskPublishedById" parameterType="Long" resultMap="TaskPublishedTaskLogResult">
         select a.tp_id, a.task_config, a.status, a.cur_epoch, a.cur_clients, a.tp_name, a.start_time,

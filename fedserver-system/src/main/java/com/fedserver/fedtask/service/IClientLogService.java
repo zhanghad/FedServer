@@ -20,6 +20,14 @@ public interface IClientLogService
     public ClientLog selectClientLogById(Long clId);
 
     /**
+     * 查询用户参与任务记录
+     *
+     * @param clientId 用户ID
+     * @return 用户参与任务记录列表
+     */
+    public List<ClientLog> selectClientLogsByClientId(Long clientId);
+
+    /**
      * 查询用户参与任务记录列表
      * 
      * @param clientLog 用户参与任务记录

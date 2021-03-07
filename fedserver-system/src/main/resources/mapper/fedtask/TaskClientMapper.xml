@@ -15,7 +15,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTaskClientList" parameterType="TaskClient" resultMap="TaskClientResult">
         <include refid="selectTaskClientVo"/>
-        <where>  
+        <where>
+        </where>
+    </select>
+
+    <select id="selectTaskClientListByTpId" parameterType="Long" resultMap="TaskClientResult">
+        <include refid="selectTaskClientVo"/>
+        <where> tp_id = #{tpId}
+        </where>
+    </select>
+
+    <select id="selectTaskClientListByClientId" parameterType="Long" resultMap="TaskClientResult">
+        <include refid="selectTaskClientVo"/>
+        <where>    client_id = #{clientId}
         </where>
     </select>
     
@@ -46,6 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <delete id="deleteTaskClientById" parameterType="Long">
         delete from task_client where tp_id = #{tpId}
+    </delete>
+
+    <delete id="deleteTaskClient" parameterType="TaskClient">
+        delete from task_client where tp_id = #{tpId} and client_id = #{clientId}
     </delete>
 
     <delete id="deleteTaskClientByIds" parameterType="String">

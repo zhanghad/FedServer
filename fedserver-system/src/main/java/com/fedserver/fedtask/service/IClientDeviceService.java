@@ -20,6 +20,14 @@ public interface IClientDeviceService
     public ClientDevice selectClientDeviceById(Long deviceId);
 
     /**
+     * 查询参与者设备
+     *
+     * @param clientId 参与者ID
+     * @return 参与者设备列表
+     */
+    public List<ClientDevice> selectClientDevicesByClientId(Long clientId);
+
+    /**
      * 查询参与者设备列表
      * 
      * @param clientDevice 参与者设备

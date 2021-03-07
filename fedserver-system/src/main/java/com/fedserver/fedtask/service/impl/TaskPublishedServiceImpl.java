@@ -48,6 +48,17 @@ public class TaskPublishedServiceImpl implements ITaskPublishedService
         return taskPublishedMapper.selectTaskPublishedList(taskPublished);
     }
 
+
+    /**
+     * 查询已发布任务列表
+     *
+     * @return 已发布任务集合
+     */
+    @Override
+    public List<TaskPublished> selectTaskPublishedALL(){
+        return taskPublishedMapper.selectTaskPublishedALL();
+    }
+
     /**
      * 新增已发布任务
      * 

@@ -33,6 +33,16 @@ public class ClientLogServiceImpl implements IClientLogService
     }
 
     /**
+     * 查询用户参与任务记录
+     *
+     * @param clientId 用户ID
+     * @return 用户参与任务记录列表
+     */
+    public List<ClientLog> selectClientLogsByClientId(Long clientId){
+        return clientLogMapper.selectClientLogsByClientId(clientId);
+    }
+
+    /**
      * 查询用户参与任务记录列表
      * 
      * @param clientLog 用户参与任务记录
