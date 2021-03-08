@@ -1,10 +1,10 @@
-package com.fedserver.fedtask;
+package com.fedserver.common.fedtask;
 
-import com.fedserver.fedtask.model.MultiRegression;
-import com.fedserver.reputation.ClientInfo;
-import com.fedserver.reputation.Clients;
-import com.fedserver.util.ByteBufferUtil;
-import com.fedserver.util.Message;
+import com.fedserver.common.fedtask.model.MultiRegression;
+import com.fedserver.common.reputation.ClientInfo;
+import com.fedserver.common.reputation.Clients;
+import com.fedserver.common.util.ByteBufferUtil;
+import com.fedserver.common.util.Message;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;

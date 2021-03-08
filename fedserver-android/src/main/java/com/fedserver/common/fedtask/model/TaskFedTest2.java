@@ -1,6 +1,6 @@
-package com.fedserver.fedtask.model;
+package com.fedserver.common.fedtask.model;
 
-import com.fedserver.aggregator.Aggregator;
+import com.fedserver.common.aggregator.Aggregator;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;
 import org.datavec.image.loader.NativeImageLoader;

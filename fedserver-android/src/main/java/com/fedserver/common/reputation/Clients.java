@@ -1,4 +1,4 @@
-package com.fedserver.reputation;
+package com.fedserver.common.reputation;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.fedserver.util;
+package com.fedserver.common.util;
 
 import java.io.*;
 import java.nio.ByteBuffer;

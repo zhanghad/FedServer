@@ -126,7 +126,6 @@ public class TaskController {
             taskClientService.deleteTaskClient(taskClient);
         }
 
-
         return msg;
     }
 

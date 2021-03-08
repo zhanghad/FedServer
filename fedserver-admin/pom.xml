@@ -67,6 +67,12 @@
             <artifactId>fedserver-framework</artifactId>
         </dependency>
 
+        <!-- android模块-->
+        <dependency>
+            <groupId>com.fedserver</groupId>
+            <artifactId>fedserver-android</artifactId>
+        </dependency>
+
         <!-- 定时任务-->
 <!--        <dependency>-->
 <!--            <groupId>com.fedserver</groupId>-->

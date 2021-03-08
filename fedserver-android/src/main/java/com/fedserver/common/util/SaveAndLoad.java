@@ -1,4 +1,4 @@
-package com.fedserver.util;
+package com.fedserver.common.util;
 
 import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;

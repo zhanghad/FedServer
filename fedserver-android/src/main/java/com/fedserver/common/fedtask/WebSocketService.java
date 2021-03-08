@@ -1,12 +1,12 @@
-package com.fedserver.fedtask;
+package com.fedserver.common.fedtask;
 
 
-import com.fedserver.fedtask.model.MultiRegression;
-import com.fedserver.reputation.ClientInfo;
-import com.fedserver.util.ByteBufferUtil;
-import com.fedserver.util.Constant;
-import com.fedserver.util.Message;
-import com.fedserver.util.SaveAndLoad;
+import com.fedserver.common.fedtask.model.MultiRegression;
+import com.fedserver.common.reputation.ClientInfo;
+import com.fedserver.common.util.ByteBufferUtil;
+import com.fedserver.common.util.Constant;
+import com.fedserver.common.util.Message;
+import com.fedserver.common.util.SaveAndLoad;
 import org.java_websocket.WebSocket;
 
 import java.io.IOException;
@@ -14,10 +14,9 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-public class WebSocketController {
+public class WebSocketService {
 
     public static int taskCount;
-
 
     public int ROUND = 2;//全局迭代次数
     public int PORT = 8887;//由系统分配
@@ -36,7 +35,7 @@ public class WebSocketController {
 
 
 
-    public WebSocketController() throws UnknownHostException {
+    public WebSocketService() throws UnknownHostException {
         taskCount++;
     }
 

@@ -1,4 +1,4 @@
-package com.fedserver.util;
+package com.fedserver.common.util;
 
 public class Constant {
 

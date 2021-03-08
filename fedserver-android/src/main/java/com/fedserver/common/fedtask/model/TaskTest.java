@@ -1,4 +1,4 @@
-package com.fedserver.fedtask.model;
+package com.fedserver.common.fedtask.model;
 
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
 import org.datavec.api.split.FileSplit;

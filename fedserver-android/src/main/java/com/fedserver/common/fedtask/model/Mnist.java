@@ -1,7 +1,7 @@
-package com.fedserver.fedtask.model;
+package com.fedserver.common.fedtask.model;
 
-import com.fedserver.aggregator.Aggregator;
-import com.fedserver.aggregator.Evaluate;
+import com.fedserver.common.aggregator.Aggregator;
+import com.fedserver.common.aggregator.Evaluate;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;

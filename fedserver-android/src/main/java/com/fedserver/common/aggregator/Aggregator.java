@@ -1,4 +1,4 @@
-package com.fedserver.aggregator;
+package com.fedserver.common.aggregator;
 
 
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;

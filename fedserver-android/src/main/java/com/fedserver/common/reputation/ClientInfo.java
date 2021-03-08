@@ -1,4 +1,4 @@
-package com.fedserver.reputation;
+package com.fedserver.common.reputation;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
