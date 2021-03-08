@@ -15,6 +15,9 @@ public class PortService {
     public static final String localHost="127.0.0.1";
     public static final int startPort=1024;
 
+
+
+
     /**
      * 分配一个空闲端口
      */
@@ -66,6 +69,7 @@ public class PortService {
         }
         return flag;
     }
+
 
 /*    public static  void main(String[] args) throws UnknownHostException {
         System.out.println(isLocalPortFree(7000));
