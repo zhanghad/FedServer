@@ -1,5 +1,6 @@
 package com.fedserver.android.controller;
 
+import com.fedserver.common.constant.AndroidConstants;
 import com.fedserver.common.constant.Constants;
 import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.domain.ClientDevice;
@@ -33,34 +34,61 @@ public class ClientInfoController {
     @Autowired
     private IClientDeviceService clientDeviceService;
 
-    @ApiOperation("用户信息下载请求")
+    @ApiOperation("下载用户信息")
     @GetMapping("get")
     public Client getClientInfo(@RequestParam("loginName") String loginName){
         return clientService.selectClientByLoginName(loginName);
     }
 
-    @ApiOperation("用户信息上传请求")
-    @PostMapping("post")
-    public String postClientInfo(@RequestBody Client client){
-
-        clientService.updateClient(client);
-
-        return Constants.SUCCESS;
+    @ApiOperation("更新用户信息")
+    @PostMapping("update")
+    public String updateClientInfo(@RequestBody Client client){
+        String msg= AndroidConstants.SUCCESS;
+        int flag=clientService.updateClient(client);
+        if(flag==0){
+            msg=AndroidConstants.FAIL;
+        }
+        return msg;
     }
 
-    @ApiOperation("用户设备信息下载请求")
-    @GetMapping("getdeviceinfo")
+    @ApiOperation("添加用户信息")
+    @PostMapping("add")
+    public String addClientInfo(@RequestBody Client client){
+        String msg=AndroidConstants.SUCCESS;
+        int flag=clientService.insertClient(client);
+        if(flag==0){
+            msg=AndroidConstants.FAIL;
+        }
+        return msg;
+    }
+
+    @ApiOperation("下载用户设备信息")
+    @GetMapping("getdevice")
     public List<ClientDevice> getDeviceInfo(@RequestParam("loginName") String loginName){
         Client client=clientService.selectClientByLoginName(loginName);
         return clientDeviceService.selectClientDevicesByClientId(client.getClientId());
     }
 
-    @ApiOperation("用户设备信息上传请求")
-    @PostMapping("postdeviceinfo")
-    public String postDeviceInfo(@RequestParam("loginName") String loginName, @RequestBody ClientDevice device){
-        clientDeviceService.updateClientDevice(device);
-        return Constants.SUCCESS;
+    @ApiOperation("更新用户设备信息")
+    @PostMapping("updatedevice")
+    public String updateDeviceInfo(@RequestParam("loginName") String loginName, @RequestBody ClientDevice device){
+        String msg=AndroidConstants.SUCCESS;
+        int flag=clientDeviceService.updateClientDevice(device);
+        if(flag==0){
+            msg=AndroidConstants.FAIL;
+        }
+        return msg;
     }
 
+    @ApiOperation("添加用户设备信息")
+    @PostMapping("adddevice")
+    public String addDeviceInfo(@RequestParam("loginName") String loginName, @RequestBody ClientDevice device){
+        String msg=AndroidConstants.SUCCESS;
+        int flag=clientDeviceService.insertClientDevice(device);
+        if(flag==0){
+            msg=AndroidConstants.FAIL;
+        }
+        return msg;
+    }
 
 }

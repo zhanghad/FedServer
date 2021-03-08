@@ -38,7 +38,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null  and status != ''"> and status = #{status}</if>
         </where>
     </select>
-    
+
+    <select id="selectAllTaskConfig"  resultMap="TaskConfigResult">
+        <include refid="selectTaskConfigVo"/>
+    </select>
+
     <select id="selectTaskConfigById" parameterType="Long" resultMap="TaskConfigResult">
         <include refid="selectTaskConfigVo"/>
         where tc_id = #{tcId}

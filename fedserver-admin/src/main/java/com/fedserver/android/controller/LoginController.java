@@ -1,7 +1,7 @@
 package com.fedserver.android.controller;
 
 
-import com.fedserver.common.constant.Constants;
+import com.fedserver.common.constant.AndroidConstants;
 import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.service.IClientService;
 import com.fedserver.framework.shiro.service.SysPasswordService;
@@ -35,16 +35,16 @@ public class LoginController {
     private SysPasswordService passwordService;
 
     @PostMapping("post")
-    @ApiOperation("用户登录请求")
+    @ApiOperation("登录")
     public String login(@RequestParam("loginName")String loginName,@RequestParam("password")String password){
-        String msg= Constants.LOGIN_SUCCESS;
+        String msg= AndroidConstants.LOGIN_SUCCESS;
 
         Client client=clientService.selectClientByLoginName(loginName);
 
         if(client==null){
-            msg="用户不存在";
+            msg= AndroidConstants.CLIENT_NOT_EXIST;
         }else if(!passwordService.encryptPassword(loginName, password, client.getSalt()).equals(client.getPassword())){
-            msg="密码错误";
+            msg=AndroidConstants.PASSWORD_WRONG;
         }
 
         return msg;

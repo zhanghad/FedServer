@@ -1,14 +1,18 @@
 package com.fedserver.android.controller;
 
+import com.fedserver.common.constant.AndroidConstants;
 import com.fedserver.common.constant.Constants;
 import com.fedserver.fedtask.domain.Client;
 import com.fedserver.fedtask.domain.TaskClient;
+import com.fedserver.fedtask.domain.TaskConfig;
 import com.fedserver.fedtask.domain.TaskPublished;
 import com.fedserver.fedtask.service.IClientService;
 import com.fedserver.fedtask.service.ITaskClientService;
+import com.fedserver.fedtask.service.ITaskConfigService;
 import com.fedserver.fedtask.service.ITaskPublishedService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,29 +42,42 @@ public class TaskController {
     @Autowired
     private ITaskClientService taskClientService;
 
-    @GetMapping("gettasksinfo")
-    @ApiOperation("下载任务信息")
-    public List<TaskPublished> getTasksInfo(@RequestParam("status") String status,@RequestParam("tp_name") String tp_name){
+    @Autowired
+    private ITaskConfigService taskConfigService;
+
+    @GetMapping("gettask")
+    @ApiOperation("查询任务信息")
+    public List<TaskPublished> getTask(@RequestParam("status") String status,@RequestParam("tp_name") String tpName){
         TaskPublished taskPublished=new TaskPublished();
         taskPublished.setStatus(status);
-        taskPublished.setTpName(tp_name);
+        taskPublished.setTpName(tpName);
         return taskPublishedService.selectTaskPublishedList(taskPublished);
     }
 
-/*    @GetMapping("gettasksinfo")
-    @ApiOperation("下载任务信息")
-    public List<TaskPublished> getTasksInfo(@RequestParam("status") String status,@RequestParam("tp_name") String tp_name){
-        TaskPublished taskPublished=new TaskPublished();
-        taskPublished.setStatus(status);
-        taskPublished.setTpName(tp_name);
-        return taskPublishedService.selectTaskPublishedList(taskPublished);
-    }*/
+    @GetMapping("getalltask")
+    @ApiOperation("下载全部任务信息")
+    public List<TaskPublished> getAllTask(){
+        return taskPublishedService.selectTaskPublishedALL();
+    }
 
+    @GetMapping("gettaskconfig")
+    @ApiOperation("下载任务配置信息")
+    public TaskConfig getTaskConfig(@RequestParam("tp_id") Long tpId){
+        TaskPublished taskPublished=taskPublishedService.selectTaskPublishedById(tpId);
+        System.out.println(taskConfigService.selectTaskConfigById(taskPublished.getTaskConfig()));
+        return taskConfigService.selectTaskConfigById(taskPublished.getTaskConfig());
+    }
+
+    @GetMapping("getalltaskconfig")
+    @ApiOperation("下载所有任务配置信息")
+    public List<TaskConfig> getAllTaskConfig(){
+        return taskConfigService.selectAllTaskConfig();
+    }
 
     @PostMapping("jointask")
     @ApiOperation("参与任务")
     public String joinTask(@RequestParam("loginName") String loginName,@RequestParam("tp_id") Long tpId){
-        String msg=Constants.SUCCESS;
+        String msg=AndroidConstants.SUCCESS;
         Client client=clientService.selectClientByLoginName(loginName);
         boolean exist=false;
 
@@ -77,7 +94,7 @@ public class TaskController {
 
         if(exist){
             //不可重复加入
-            msg=Constants.FAIL;
+            msg= AndroidConstants.FAIL;
         }else {
             taskClientService.insertTaskClient(taskClient);
         }
@@ -87,7 +104,7 @@ public class TaskController {
     @PostMapping("quittask")
     @ApiOperation("退出任务")
     public String quitTask(@RequestParam("loginName") String loginName,@RequestParam("tp_id") Long tpId){
-        String msg=Constants.SUCCESS;
+        String msg=AndroidConstants.SUCCESS;
         Client client=clientService.selectClientByLoginName(loginName);
         boolean exist=false;
 
@@ -104,10 +121,12 @@ public class TaskController {
 
         if(!exist){
             //不存在
-            msg=Constants.FAIL;
+            msg=AndroidConstants.FAIL;
         }else {
             taskClientService.deleteTaskClient(taskClient);
         }
+
+
         return msg;
     }
 

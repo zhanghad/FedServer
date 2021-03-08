@@ -37,11 +37,10 @@ public class HistoryController {
     private IClientLogService clientLogService;
 
 
-    @ApiOperation("用户参与记录下载请求")
+    @ApiOperation("下载用户参与记录")
     @GetMapping("get")
     public List<ClientLog> getClientHistory(@RequestParam("loginName")String loginName){
         Client client=clientService.selectClientByLoginName(loginName);
-
         return clientLogService.selectClientLogsByClientId(client.getClientId());
     }
 

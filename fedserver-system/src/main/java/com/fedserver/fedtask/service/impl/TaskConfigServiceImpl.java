@@ -45,6 +45,17 @@ public class TaskConfigServiceImpl implements ITaskConfigService
         return taskConfigMapper.selectTaskConfigList(taskConfig);
     }
 
+
+    /**
+     * 查询所有任务配置信息
+     *
+     * @return 任务配置信息集合
+     */
+    @Override
+    public List<TaskConfig> selectAllTaskConfig(){
+        return taskConfigMapper.selectAllTaskConfig();
+    }
+
     /**
      * 新增任务配置信息
      * 

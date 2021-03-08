@@ -91,9 +91,8 @@ public class TaskPublishedController extends BaseController
     {
         taskPublished.setCurClients(0L);
         taskPublished.setCurEpoch(0L);
-        taskPublished.setStartTime(DateUtils.getNowDate());
-//        taskPublished.setCreateBy(ShiroUtils.getLoginName());
-//        taskPublished.setCreateTime(DateUtils.getNowDate());
+        taskPublished.setCreateBy(ShiroUtils.getLoginName());
+        taskPublished.setCreateTime(DateUtils.getNowDate());
         return toAjax(taskPublishedService.insertTaskPublished(taskPublished));
     }
 

@@ -1,6 +1,7 @@
 package com.fedserver.android.controller;
 
 
+import com.fedserver.common.constant.AndroidConstants;
 import com.fedserver.common.constant.Constants;
 import com.fedserver.common.constant.ShiroConstants;
 import com.fedserver.common.constant.UserConstants;
@@ -43,7 +44,7 @@ public class RegisterController {
     private SysPasswordService passwordService;
 
     @PostMapping("post")
-    @ApiOperation("用户注册请求")
+    @ApiOperation("注册")
     public String register(@RequestBody Client client){
         String msg = "";
         String loginName=client.getLoginName();
@@ -52,25 +53,25 @@ public class RegisterController {
 
         if (StringUtils.isEmpty(loginName))
         {
-            msg = "登录名不能为空";
+            msg = AndroidConstants.LOGIN_NAME_NULL;
         }
         else if (StringUtils.isEmpty(password))
         {
-            msg = "用户密码不能为空";
+            msg = AndroidConstants.PASSWORD_NULL;
         }
-        else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-                || password.length() > UserConstants.PASSWORD_MAX_LENGTH)
+        else if (password.length() < AndroidConstants.PASSWORD_MIN_LENGTH
+                || password.length() > AndroidConstants.PASSWORD_MAX_LENGTH)
         {
-            msg = "密码长度必须在5到20个字符之间";
+            msg = AndroidConstants.PASSWORD_LENGTH_WRONG;
         }
-        else if (loginName.length() < UserConstants.USERNAME_MIN_LENGTH
-                || loginName.length() > UserConstants.USERNAME_MAX_LENGTH)
+        else if (loginName.length() < AndroidConstants.USERNAME_MIN_LENGTH
+                || loginName.length() > AndroidConstants.USERNAME_MAX_LENGTH)
         {
-            msg = "账户长度必须在2到20个字符之间";
+            msg = AndroidConstants.LOGIN_NAME_LENGTH_WRONG;
         }
         else if (UserConstants.USER_NAME_NOT_UNIQUE.equals(clientService.checkLoginNameUnique(loginName)))
         {
-            msg = "保存用户'" + loginName + "'失败，注册账号已存在";
+            msg = AndroidConstants.CLIENT_ALREADY_EXIST;
         }
         else
         {
@@ -80,9 +81,9 @@ public class RegisterController {
             client.setStatus("0");
             int clientId = clientService.insertClient(client);
             if(clientId!=1){
-                msg = "注册失败,请联系系统管理人员";
+                msg = AndroidConstants.REGISTER_FAIL;
             }else {
-                msg = "注册成功";
+                msg = AndroidConstants.REGISTER_SUCCESS;
             }
         }
 

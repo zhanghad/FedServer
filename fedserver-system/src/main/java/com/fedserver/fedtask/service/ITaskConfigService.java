@@ -28,6 +28,13 @@ public interface ITaskConfigService
     public List<TaskConfig> selectTaskConfigList(TaskConfig taskConfig);
 
     /**
+     * 查询所有任务配置信息
+     *
+     * @return 任务配置信息集合
+     */
+    public List<TaskConfig> selectAllTaskConfig();
+
+    /**
      * 新增任务配置信息
      * 
      * @param taskConfig 任务配置信息

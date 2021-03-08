@@ -20,8 +20,15 @@ public interface TaskConfigMapper
     public TaskConfig selectTaskConfigById(Long tcId);
 
     /**
+     * 查询所有任务配置信息
+     *
+     * @return 任务配置信息集合
+     */
+    public List<TaskConfig> selectAllTaskConfig();
+
+    /**
      * 查询任务配置信息列表
-     * 
+     *
      * @param taskConfig 任务配置信息
      * @return 任务配置信息集合
      */
