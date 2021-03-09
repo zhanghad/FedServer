@@ -65,4 +65,12 @@ public interface ITaskPublishedService
      * @return 结果
      */
     public int deleteTaskPublishedById(Long tpId);
+
+
+    /**
+     *  检测端口是否已经被分配
+     * @param port 端口
+     * @return  端口空闲 true ，端口被占用 false
+     */
+    public boolean isPortFree(int port);
 }

@@ -1,9 +1,11 @@
 package com.fedserver.web.controller.fed;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 import com.fedserver.common.utils.DateUtils;
 import com.fedserver.framework.util.ShiroUtils;
+import com.fedserver.service.PortService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,9 @@ public class TaskPublishedController extends BaseController
 
     @Autowired
     private ITaskPublishedService taskPublishedService;
+
+    @Autowired
+    private PortService portService;
 
     @RequiresPermissions("fed:published:view")
     @GetMapping()
@@ -87,12 +92,15 @@ public class TaskPublishedController extends BaseController
     @Log(title = "已发布任务", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(TaskPublished taskPublished)
-    {
+    public AjaxResult addSave(TaskPublished taskPublished) throws UnknownHostException {
         taskPublished.setCurClients(0L);
         taskPublished.setCurEpoch(0L);
         taskPublished.setCreateBy(ShiroUtils.getLoginName());
         taskPublished.setCreateTime(DateUtils.getNowDate());
+
+        int[] ports=portService.allocateTwoPorts();
+        taskPublished.setComPort(ports[0]);
+        taskPublished.setMonitorPort(ports[1]);
         return toAjax(taskPublishedService.insertTaskPublished(taskPublished));
     }
 

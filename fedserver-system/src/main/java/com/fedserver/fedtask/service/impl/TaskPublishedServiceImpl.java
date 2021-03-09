@@ -1,5 +1,6 @@
 package com.fedserver.fedtask.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -139,4 +140,27 @@ public class TaskPublishedServiceImpl implements ITaskPublishedService
             }
         }
     }
+
+    /**
+     *  检测端口是否已经被分配
+     * @param port 端口
+     * @return  端口空闲 true ，端口被占用 false
+     */
+    @Override
+    public boolean isPortFree(int port){
+        boolean flag=true;
+        List<TaskPublished> taskPublished=selectTaskPublishedALL();
+        Iterator<TaskPublished> it = taskPublished.iterator();
+        while (it.hasNext()){
+            TaskPublished tp=it.next();
+            if(tp.getComPort()==port || tp.getMonitorPort()==port){
+                flag=false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+
+
 }

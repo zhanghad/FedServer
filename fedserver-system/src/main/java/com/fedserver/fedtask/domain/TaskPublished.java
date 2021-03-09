@@ -48,6 +48,16 @@ public class TaskPublished extends BaseEntity
     /** 联邦任务日志信息 */
     private List<TaskLog> taskLogList;
 
+
+    /** 通信端口*/
+    @Excel(name = "通信端口")
+    private int comPort;
+
+    /** 监视端口*/
+    @Excel(name = "监视端口")
+    private int monitorPort;
+
+
     public void setTpId(Long tpId) 
     {
         this.tpId = tpId;
@@ -122,6 +132,22 @@ public class TaskPublished extends BaseEntity
         this.taskLogList = taskLogList;
     }
 
+    public int getComPort() {
+        return comPort;
+    }
+
+    public void setComPort(int comPort) {
+        this.comPort = comPort;
+    }
+
+    public int getMonitorPort() {
+        return monitorPort;
+    }
+
+    public void setMonitorPort(int monitorPort) {
+        this.monitorPort = monitorPort;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -133,6 +159,8 @@ public class TaskPublished extends BaseEntity
             .append("tpName", getTpName())
             .append("startTime", getStartTime())
             .append("taskLogList", getTaskLogList())
+            .append("comPort", getComPort())
+            .append("monitorPort", getMonitorPort())
             .toString();
     }
 }

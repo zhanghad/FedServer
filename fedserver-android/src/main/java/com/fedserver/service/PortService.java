@@ -1,7 +1,8 @@
 package com.fedserver.service;
 
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import com.fedserver.fedtask.service.ITaskPublishedService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,16 +16,40 @@ public class PortService {
     public static final String localHost="127.0.0.1";
     public static final int startPort=1024;
 
-
-
+    @Autowired
+    private ITaskPublishedService taskPublishedService;
 
     /**
-     * 分配一个空闲端口
+     * 分配2个空闲端口
+     */
+    public int[] allocateTwoPorts() throws UnknownHostException {
+        int[] ports=new int[2];
+        int count=0;
+        int port=startPort;
+
+        while (true){
+            if(isLocalPortFree(port) && taskPublishedService.isPortFree(port)){
+                ports[count]=port;
+                count++;
+                if(count==2){
+                    break;
+                }else {
+                    port++;
+                }
+            }else {
+                port++;
+            }
+        }
+        return ports;
+    }
+
+    /**
+     * 分配1个空闲端口
      */
     public int allocatePort() throws UnknownHostException {
         int port=startPort;
         while (true){
-            if(isLocalPortFree(port)){
+            if(isLocalPortFree(port) && taskPublishedService.isPortFree(port)){
                 break;
             }else {
                 port++;

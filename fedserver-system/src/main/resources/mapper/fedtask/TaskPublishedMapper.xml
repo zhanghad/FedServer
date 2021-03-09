@@ -12,6 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="curClients"    column="cur_clients"    />
         <result property="tpName"    column="tp_name"    />
         <result property="startTime"    column="start_time"    />
+        <result property="comPort"    column="com_port"    />
+        <result property="monitorPort"    column="monitor_port"    />
     </resultMap>
 
     <resultMap id="TaskPublishedTaskLogResult" type="TaskPublished" extends="TaskPublishedResult">
@@ -31,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTaskPublishedVo">
-        select tp_id, task_config, status, cur_epoch, cur_clients, tp_name, start_time from task_published
+        select tp_id, task_config, status, cur_epoch, cur_clients, tp_name, start_time, com_port, monitor_port from task_published
     </sql>
 
     <select id="selectTaskPublishedList" parameterType="TaskPublished" resultMap="TaskPublishedResult">
@@ -47,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectTaskPublishedById" parameterType="Long" resultMap="TaskPublishedTaskLogResult">
-        select a.tp_id, a.task_config, a.status, a.cur_epoch, a.cur_clients, a.tp_name, a.start_time,
+        select a.tp_id, a.task_config, a.status, a.cur_epoch, a.cur_clients, a.tp_name, a.start_time, a.com_port, a.monitor_port,
             b.tl_id, b.tp_id, b.train_epoch, b.model_evaluate, b.client_start, b.client_success, b.flag, b.start_time, b.end_time
         from task_published a
         left join task_log b on b.tp_id = a.tp_id
@@ -63,6 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="curClients != null">cur_clients,</if>
             <if test="tpName != null and tpName != ''">tp_name,</if>
             <if test="startTime != null">start_time,</if>
+            <if test="comPort != null">com_port,</if>
+            <if test="monitorPort != null">monitor_port,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="taskConfig != null">#{taskConfig},</if>
@@ -71,6 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="curClients != null">#{curClients},</if>
             <if test="tpName != null and tpName != ''">#{tpName},</if>
             <if test="startTime != null">#{startTime},</if>
+            <if test="comPort != null">#{comPort},</if>
+            <if test="monitorPort != null">#{monitorPort},</if>
          </trim>
     </insert>
 
@@ -83,6 +89,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="curClients != null">cur_clients = #{curClients},</if>
             <if test="tpName != null and tpName != ''">tp_name = #{tpName},</if>
             <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="comPort != null">com_port = #{comPort},</if>
+            <if test="monitorPort != null">monitor_port = #{monitorPort},</if>
         </trim>
         where tp_id = #{tpId}
     </update>
