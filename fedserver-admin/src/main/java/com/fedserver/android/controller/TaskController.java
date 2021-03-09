@@ -29,7 +29,7 @@ import java.util.ListIterator;
 
 @RestController
 @RequestMapping(value="/android/task")
-@Api(tags = "Android端任务管理请求处理")
+@Api(tags = "客户端任务管理请求处理")
 public class TaskController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 

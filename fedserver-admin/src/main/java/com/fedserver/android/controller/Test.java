@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(value="/android/test")
-@Api(tags = "Android端通信测试")
+@Api(tags = "客户端通信测试")
 public class Test {
 
     private static final Logger log = LoggerFactory.getLogger(Test.class);

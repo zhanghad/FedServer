@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/android/clientinfo")
-@Api(tags = "Android端用户信息请求处理")
+@Api(tags = "客户端用户信息请求处理")
 public class ClientInfoController {
 
     private static final Logger log = LoggerFactory.getLogger(ClientInfoController.class);

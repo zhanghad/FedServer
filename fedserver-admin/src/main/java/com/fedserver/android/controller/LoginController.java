@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value="/android/login")
-@Api(tags = "Android端登录请求处理")
+@Api(tags = "客户端登录请求处理")
 public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);

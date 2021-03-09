@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/android/history")
-@Api(tags = "Android端任务历史请求处理")
+@Api(tags = "客户端任务历史请求处理")
 public class HistoryController {
 
     private static final Logger log = LoggerFactory.getLogger(HistoryController.class);

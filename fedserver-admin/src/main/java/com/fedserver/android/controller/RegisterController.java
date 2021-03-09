@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/android/register")
-@Api(tags = "Android端注册请求处理")
+@Api(tags = "客户端注册请求处理")
 public class RegisterController {
 
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);
