@@ -29,7 +29,7 @@ public class FedTaskService {
 
 
     //测试任务
-    @Async("fedTaskExecutor")
+//    @Async("fedTaskExecutor")
     public String taskTest() throws IOException, InterruptedException {
         WebSocketService webSocketController=new WebSocketService();
         webSocketController.startFedTask();

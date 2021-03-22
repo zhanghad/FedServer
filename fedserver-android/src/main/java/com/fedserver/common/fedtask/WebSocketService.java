@@ -19,7 +19,7 @@ public class WebSocketService {
     public static int taskCount;
 
     public int ROUND = 2;//全局迭代次数
-    public int PORT = 8887;//由系统分配
+    public int PORT = 10000;//测试
     public int MIN_UPDATE = 1;//需满足的最小更新数
     public int MIN_CLIENTS = 1;//最小参与者数目
     public int MAX_CLIENTS = 2;//最大参与者数目

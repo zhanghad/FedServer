@@ -8,14 +8,10 @@ import java.util.LinkedHashMap;
 
 public class Message implements Serializable {
     private static final long serialVersionUID=20000L;
-
-
     public byte owner;
     public byte order;
     public MultiLayerNetwork model;
     public LinkedHashMap<String, INDArray> weight;
-
-
 
     public void setMessage(byte owner,byte order,MultiLayerNetwork model,LinkedHashMap<String, INDArray> weight){
         this.weight=weight;
@@ -24,13 +20,6 @@ public class Message implements Serializable {
         this.owner=owner;
     }
 
-/*    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Message message=new Message();
-        ByteBuffer byteBuffer= ByteBufferUtil.getByteBuffer(message);
-        System.out.println(byteBuffer);
-        Object object=ByteBufferUtil.getObject(byteBuffer);
-        System.out.println(object.getClass());
-        System.out.println(((Message)object).model);
-    }*/
+
 
 }

@@ -38,9 +38,16 @@ public class LoginController {
     @ApiOperation("登录")
     public String login(@RequestParam("loginName")String loginName,@RequestParam("password")String password){
         String msg= AndroidConstants.LOGIN_SUCCESS;
+        log.info(loginName+" try to connect to server.");
+
+        /**
+         * 测试用
+         */
+//        if(loginName.equals("123") && password.equals("123")){
+//            return msg;
+//        }
 
         Client client=clientService.selectClientByLoginName(loginName);
-
         if(client==null){
             msg= AndroidConstants.CLIENT_NOT_EXIST;
         }else if(!passwordService.encryptPassword(loginName, password, client.getSalt()).equals(client.getPassword())){
