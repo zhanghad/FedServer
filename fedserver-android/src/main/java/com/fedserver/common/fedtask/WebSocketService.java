@@ -59,6 +59,7 @@ public class WebSocketService {
         }
 
         System.out.println("训练成功");
+        fedWebSocketServer.broadcast("success");
 
         System.out.println("全局梯度为");
         System.out.println(fedTask.getGlobalWeight());

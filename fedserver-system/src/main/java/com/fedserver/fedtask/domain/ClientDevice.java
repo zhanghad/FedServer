@@ -22,6 +22,12 @@ public class ClientDevice extends BaseEntity
     @Excel(name = "用户")
     private Long clientId;
 
+
+
+    /** 设备唯一标识代码 */
+    @Excel(name = "编码")
+    private String deviceCode;
+
     /** 设备（特指智能手机）型号 */
     @Excel(name = "设备", readConverterExp = "特=指智能手机")
     private String deviceType;
@@ -32,11 +38,11 @@ public class ClientDevice extends BaseEntity
 
     /** 电池容量，单位为mAh */
     @Excel(name = "电池容量，单位为mAh")
-    private Long batteryCapacity;
+    private Double batteryCapacity;
 
     /** 内存容量，单位为GB */
     @Excel(name = "内存容量，单位为GB")
-    private Long ramCapacity;
+    private Double ramCapacity;
 
     /** Android版本 */
     @Excel(name = "Android版本")
@@ -48,7 +54,7 @@ public class ClientDevice extends BaseEntity
 
     /** 机身存储容量，单位GB */
     @Excel(name = "机身存储容量，单位GB")
-    private Long storage;
+    private Double storage;
 
     /** 是否连接电源，0表示没有，1表示已连接 */
     @Excel(name = "是否连接电源，0表示没有，1表示已连接")
@@ -90,21 +96,21 @@ public class ClientDevice extends BaseEntity
     {
         return proc;
     }
-    public void setBatteryCapacity(Long batteryCapacity) 
+    public void setBatteryCapacity(Double batteryCapacity)
     {
         this.batteryCapacity = batteryCapacity;
     }
 
-    public Long getBatteryCapacity() 
+    public Double getBatteryCapacity()
     {
         return batteryCapacity;
     }
-    public void setRamCapacity(Long ramCapacity) 
+    public void setRamCapacity(Double ramCapacity)
     {
         this.ramCapacity = ramCapacity;
     }
 
-    public Long getRamCapacity() 
+    public Double getRamCapacity()
     {
         return ramCapacity;
     }
@@ -126,12 +132,12 @@ public class ClientDevice extends BaseEntity
     {
         return os;
     }
-    public void setStorage(Long storage) 
+    public void setStorage(Double storage)
     {
         this.storage = storage;
     }
 
-    public Long getStorage() 
+    public Double getStorage()
     {
         return storage;
     }
@@ -143,6 +149,14 @@ public class ClientDevice extends BaseEntity
     public String getPowered() 
     {
         return powered;
+    }
+
+    public String getDeviceCode() {
+        return deviceCode;
+    }
+
+    public void setDeviceCode(String deviceCode) {
+        this.deviceCode = deviceCode;
     }
 
     @Override

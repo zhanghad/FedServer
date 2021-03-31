@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="ClientDevice" id="ClientDeviceResult">
         <result property="deviceId"    column="device_id"    />
         <result property="clientId"    column="client_id"    />
+        <result property="deviceCode"    column="device_code"    />
         <result property="deviceType"    column="device_type"    />
         <result property="proc"    column="proc"    />
         <result property="batteryCapacity"    column="battery_capacity"    />
@@ -18,13 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectClientDeviceVo">
-        select device_id, client_id, device_type, proc, battery_capacity, ram_capacity, android_version, os, storage, powered from client_device
+        select device_id, client_id, device_code,device_type, proc, battery_capacity, ram_capacity, android_version, os, storage, powered from client_device
     </sql>
 
     <select id="selectClientDeviceList" parameterType="ClientDevice" resultMap="ClientDeviceResult">
         <include refid="selectClientDeviceVo"/>
         <where>  
             <if test="clientId != null "> and client_id = #{clientId}</if>
+            <if test="deviceCode != null  and deviceType != ''"> and device_code = #{deviceCode}</if>
             <if test="deviceType != null  and deviceType != ''"> and device_type = #{deviceType}</if>
             <if test="proc != null  and proc != ''"> and proc = #{proc}</if>
             <if test="batteryCapacity != null "> and battery_capacity = #{batteryCapacity}</if>
@@ -51,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="clientId != null">client_id,</if>
             <if test="deviceType != null">device_type,</if>
+            <if test="deviceCode != null">device_code,</if>
             <if test="proc != null">proc,</if>
             <if test="batteryCapacity != null">battery_capacity,</if>
             <if test="ramCapacity != null">ram_capacity,</if>
@@ -62,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="clientId != null">#{clientId},</if>
             <if test="deviceType != null">#{deviceType},</if>
+            <if test="deviceCode != null">#{deviceCode},</if>
             <if test="proc != null">#{proc},</if>
             <if test="batteryCapacity != null">#{batteryCapacity},</if>
             <if test="ramCapacity != null">#{ramCapacity},</if>
@@ -77,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="clientId != null">client_id = #{clientId},</if>
             <if test="deviceType != null">device_type = #{deviceType},</if>
+            <if test="deviceCode != null">device_code = #{deviceCode},</if>
             <if test="proc != null">proc = #{proc},</if>
             <if test="batteryCapacity != null">battery_capacity = #{batteryCapacity},</if>
             <if test="ramCapacity != null">ram_capacity = #{ramCapacity},</if>

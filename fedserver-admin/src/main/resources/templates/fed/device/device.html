@@ -21,6 +21,7 @@
                                     <option value="-1">代码生成请选择字典属性</option>
                                 </select>
                             </li>-->
+
                             <li>
                                 <label>处理器型号：</label>
                                 <input type="text" name="proc"/>
@@ -96,8 +97,13 @@
                 },
                 {
                     field: 'deviceId',
-                    title: '设备标识',
+                    title: '标识',
                     visible: false
+                },
+                {
+                    field: 'deviceCode',
+                    title: '编码',
+                    visible: true
                 },
                 {
                     field: 'clientId',
@@ -105,11 +111,11 @@
                 },
                 {
                     field: 'deviceType',
-                    title: '设备型号'
+                    title: '型号'
                 },
                 {
                     field: 'proc',
-                    title: '处理器型号'
+                    title: '处理器'
                 },
                 {
                     field: 'batteryCapacity',

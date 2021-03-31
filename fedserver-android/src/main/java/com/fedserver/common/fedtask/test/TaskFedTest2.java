@@ -1,4 +1,4 @@
-package com.fedserver.common.fedtask.model;
+package com.fedserver.common.fedtask.test;
 
 import com.fedserver.common.aggregator.Aggregator;
 import org.datavec.api.io.labels.ParentPathLabelGenerator;
