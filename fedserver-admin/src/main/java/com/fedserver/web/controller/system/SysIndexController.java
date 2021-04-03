@@ -85,11 +85,10 @@ public class SysIndexController extends BaseController
         CookieUtils.setCookie(response, "nav-style", style);
     }
 
-    // 系统介绍
-    @GetMapping("/system/main")
+    // 退出系统
+    @GetMapping("/system/quit")
     public String main(ModelMap mmap)
     {
-        mmap.put("version", Global.getVersion());
-        return "main_v1";
+        return "login";
     }
 }
